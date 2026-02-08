@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,10 +16,10 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Profil</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Galeri</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Kontak</a>
+              <Link to="/" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Beranda</Link>
+              <Link to="/profil" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Profil</Link>
+              <Link to="/galeri" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Galeri</Link>
+              <Link to="/kontak" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Kontak</Link>
             </div>
           </div>
 
@@ -44,10 +45,10 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white">
-            <a href="#" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Profil</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Galeri</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
+            <Link to="/" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Beranda</Link>
+            <Link to="/profil" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Profil</Link>
+            <Link to="/galeri" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Galeri</Link>
+            <Link to="/kontak" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Kontak</Link>
           </div>
         </div>
       )}

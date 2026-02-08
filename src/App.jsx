@@ -1,16 +1,19 @@
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './Navbar'
-import Hero from './Hero'
-import Features from './Features'
-import Testimonials from './Testimonials'
+import Footer from './Footer'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
 
 function App() {
   return (
     <>
       <Navbar />
       <div className="pt-16">
-        <Hero />
-        <Features />
-        <Testimonials />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profil" element={<Profile />} />
+        </Routes>
+        <Footer />
       </div>
     </>
   )
