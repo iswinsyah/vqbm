@@ -1,4 +1,4 @@
-name: Deploy VQBM Final
+name: Deploy VQBM Final Fix
 
 on:
   push:
