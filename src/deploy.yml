@@ -1,4 +1,4 @@
-name: Deploy Website VQBM
+name: Deploy VQBM Final
 
 on:
   push:
