@@ -1,4 +1,4 @@
-name: Deploy VQBM Final Fix
+name: Deploy VQBM Production
 
 on:
   push:
