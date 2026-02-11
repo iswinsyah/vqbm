@@ -1,7 +1,7 @@
 const testimonials = [
   {
     content: "Alhamdulillah, anak saya tidak hanya hafal 30 juz, tapi juga punya mindset bisnis yang bagus. Sekarang sudah mulai jualan online kecil-kecilan.",
-    author: "Budi Santoso",
+    author: "Ayah Fulan",
     role: "Wali Santri"
   },
   {
