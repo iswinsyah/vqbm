@@ -1,4 +1,4 @@
-name: Deploy VQBM Production (Root Fix)
+name: Deploy VQBM Production (Try 4)
 
 on:
   push:
@@ -32,8 +32,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: ./
-          state-name: .ftp-deploy-sync-state-root-v1.json
+          server-dir: ./public_html/
+          state-name: .ftp-deploy-sync-state-v4.json
           port: 21
           protocol: ftps
           security: loose
