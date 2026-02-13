@@ -33,6 +33,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: public_html/
+          state-name: .ftp-deploy-sync-state-force.json
           port: 21
           protocol: ftps
           security: loose
