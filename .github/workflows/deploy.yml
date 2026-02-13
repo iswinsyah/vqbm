@@ -1,4 +1,4 @@
-name: Deploy VQBM Production (Final Path)
+name: Deploy VQBM Production (Root Fix)
 
 on:
   push:
@@ -32,8 +32,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: domains/villaquranbaronmalang.com/public_html/
-          state-name: .ftp-deploy-sync-state-final.json
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state-root-v1.json
           port: 21
           protocol: ftps
           security: loose
