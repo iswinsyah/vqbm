@@ -1,4 +1,4 @@
-name: Deploy VQBM Production (Debug Mode)
+name: Deploy VQBM Production (Final Path)
 
 on:
   push:
@@ -32,9 +32,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: public_html/
-          state-name: .ftp-deploy-sync-state-debug.json
-          log-level: verbose
+          server-dir: domains/villaquranbaronmalang.com/public_html/
+          state-name: .ftp-deploy-sync-state-final.json
           port: 21
           protocol: ftps
           security: loose
