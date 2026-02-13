@@ -1,4 +1,4 @@
-name: Deploy VQBM Production (Retry)
+name: Deploy VQBM Production
 
 on:
   push:
