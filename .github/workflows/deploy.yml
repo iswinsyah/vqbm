@@ -1,4 +1,4 @@
-name: Deploy VQBM Production (Force V2)
+name: Deploy VQBM Production (Debug Mode)
 
 on:
   push:
@@ -25,9 +25,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Cek Isi Folder Dist (Debug)
-        run: ls -la dist
-
       - name: Deploy to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -36,7 +33,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: public_html/
-          state-name: .ftp-deploy-sync-state-force-v2.json
+          state-name: .ftp-deploy-sync-state-debug.json
+          log-level: verbose
           port: 21
           protocol: ftps
           security: loose
