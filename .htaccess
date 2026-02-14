@@ -1,9 +1,9 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  # Arahkan semua akses root ke folder dist
+  # Arahkan domain utama ke dist/index.html
   RewriteRule ^$ dist/index.html [L]
   
-  # Jika file/folder yang diminta tidak ada di root, cari di dist
+  # Arahkan semua file lain ke folder dist/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ dist/$1 [L]
