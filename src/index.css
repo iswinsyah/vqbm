@@ -1,3 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #064E3B; /* Emerald Green */
+  --color-secondary: #D97706; /* Gold */
+  --color-dark: #0F172A; /* Slate 900 */
+  --color-light: #F8FAFC; /* Slate 50 */
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Merriweather', serif;
+}
