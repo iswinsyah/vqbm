@@ -1,64 +1,53 @@
-const features = [
-  {
-    name: 'Tahfidz Al-Qur\'an',
-    description: 'Program hafalan intensif dengan target mutqin, didampingi asatidz berpengalaman untuk mencetak penjaga wahyu Allah.',
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Young Entrepreneur',
-    description: 'Kurikulum kewirausahaan praktis (Business Day, Market Day) untuk membangun mental mandiri dan kreatif sejak dini.',
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Digital & IT Support',
-    description: 'Fasilitas teknologi modern untuk menunjang pembelajaran Tahfidz dan pengembangan bisnis digital para siswa.',
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
-  },
-]
-
 const Features = () => {
   return (
-    <div className="py-12 bg-gray-50">
+    <section id="program" className="py-20 bg-slate-50 border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:text-center">
-          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Keunggulan</h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Kenapa Memilih VQBM?
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            Kami berdedikasi untuk menciptakan lingkungan belajar yang inspiratif dan mendukung tumbuh kembang siswa secara optimal.
-          </p>
+        <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif font-bold text-slate-900">Pilar Akademik</h2>
+            <div className="w-24 h-1 bg-secondary mx-auto mt-4 rounded-full"></div>
         </div>
 
-        <div className="mt-10">
-          <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
-            {features.map((feature) => (
-              <div key={feature.name} className="relative">
-                <dt>
-                  <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                    {feature.icon}
-                  </div>
-                  <p className="ml-16 text-lg leading-6 font-medium text-gray-900">{feature.name}</p>
-                </dt>
-                <dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
-              </div>
-            ))}
-          </dl>
+        <div className="grid md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-slate-100 overflow-hidden group">
+                <div className="h-48 bg-emerald-100 relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition"></div>
+                </div>
+                <div className="p-6">
+                    <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-primary transition">Tahfidz & Tsaqofah</h4>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-3">Program intensif hafalan 30 juz bersanad dengan pendalaman kitab kuning (Turats) sebagai fondasi pemikiran Islam.</p>
+                    <a href="#" className="text-secondary font-semibold text-sm hover:underline">Selengkapnya &rarr;</a>
+                </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-slate-100 overflow-hidden group">
+                <div className="h-48 bg-slate-900 relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                     <div className="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">Unggulan</div>
+                </div>
+                <div className="p-6">
+                    <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-primary transition">Sains & AI Terapan</h4>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-3">Kurikulum berbasis proyek untuk penguasaan Applied AI, Coding, dan pemanfaatan teknologi digital untuk dakwah.</p>
+                    <a href="#" className="text-secondary font-semibold text-sm hover:underline">Selengkapnya &rarr;</a>
+                </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-slate-100 overflow-hidden group">
+                <div className="h-48 bg-blue-100 relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                </div>
+                <div className="p-6">
+                    <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-primary transition">Bisnis & Kemandirian</h4>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-3">Inkubator bisnis santri yang melatih mental wirausaha, manajemen keuangan, dan kepemimpinan sejak dini.</p>
+                    <a href="#" className="text-secondary font-semibold text-sm hover:underline">Selengkapnya &rarr;</a>
+                </div>
+            </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

@@ -1,59 +1,71 @@
-const testimonials = [
-  {
-    content: "Alhamdulillah, anak saya tidak hanya hafal 30 juz, tapi juga punya mindset bisnis yang bagus. Sekarang sudah mulai jualan online kecil-kecilan.",
-    author: "Ayah Fulan",
-    role: "Wali Santri"
-  },
-  {
-    content: "Program entrepreneurship di VQBM sangat membantu melatih kemandirian. Fasilitas IT-nya juga sangat mendukung untuk belajar digital marketing.",
-    author: "Siti Aminah",
-    role: "Alumni Angkatan 2023"
-  },
-  {
-    content: "Lingkungannya sangat kondusif untuk menghafal Al-Qur'an. Asatidz-nya sabar dan metode belajarnya mudah diikuti.",
-    author: "Ahmad Rizki",
-    role: "Santri Kelas 11"
-  },
-]
-
 const Testimonials = () => {
   return (
-    <section className="py-12 bg-white overflow-hidden md:py-20 lg:py-24">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative">
-          <div className="text-center">
-            <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
-              Apa Kata Mereka?
-            </h2>
-            <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-              Pengalaman nyata dari santri dan wali santri VQBM.
-            </p>
-          </div>
-          <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="flex flex-col rounded-lg shadow-lg overflow-hidden border border-gray-200">
-                <div className="flex-1 bg-white p-6 flex flex-col justify-between">
-                  <div className="flex-1">
-                    <p className="text-lg font-medium text-gray-900">
-                      "{testimonial.content}"
-                    </p>
-                  </div>
-                  <div className="mt-6 flex items-center">
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-blue-600">
-                        {testimonial.author}
-                      </p>
-                      <div className="flex space-x-1 text-sm text-gray-500">
-                        <time>{testimonial.role}</time>
-                      </div>
+    <section className="py-20 bg-slate-50 relative overflow-hidden">
+        {/* Decoration */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-16">
+                <h2 className="text-3xl font-serif font-bold text-slate-900">Apa Kata Mereka?</h2>
+                <p className="text-slate-500 mt-2">Pandangan tokoh dan wali santri tentang Villa Quran Baron.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+                {/* Testi 1 */}
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative">
+                    <i className="fa-solid fa-quote-right text-4xl text-slate-100 absolute top-4 right-4"></i>
+                    <div className="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" className="w-12 h-12 rounded-full object-cover" />
+                        <div>
+                            <h4 className="font-bold text-slate-900 text-sm">Dr. H. Ahmad Zaki, M.Si</h4>
+                            <p className="text-xs text-slate-500">Dosen Universitas Negeri & Praktisi Dakwah</p>
+                        </div>
                     </div>
-                  </div>
+                    <p className="text-slate-600 text-sm italic leading-relaxed">
+                        "Saya terkejut melihat anak-anak di sini. Mereka hafal Al-Quran dengan mutqin, tapi saat diajak bicara soal algoritma dan bisnis, wawasannya sangat luas. Ini model pendidikan yang kita butuhkan."
+                    </p>
+                    <div className="flex text-yellow-400 text-xs mt-4">
+                        <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
+
+                {/* Testi 2 */}
+                <div className="bg-white p-8 rounded-2xl shadow-md border border-primary/20 relative transform md:-translate-y-2">
+                    <i className="fa-solid fa-quote-right text-4xl text-primary/10 absolute top-4 right-4"></i>
+                    <div className="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" className="w-12 h-12 rounded-full object-cover" />
+                        <div>
+                            <h4 className="font-bold text-slate-900 text-sm">Ibu Sarah Amalia</h4>
+                            <p className="text-xs text-slate-500">Wali Santri Angkatan 2</p>
+                        </div>
+                    </div>
+                    <p className="text-slate-700 text-sm italic leading-relaxed font-medium">
+                        "Awalnya ragu karena non-formal. Tapi setelah anak saya lulus, dia justru diterima di PTN jalur prestasi Tahfidz dan sekarang sudah punya bisnis *web development* sendiri untuk biaya kuliahnya. MasyaAllah."
+                    </p>
+                    <div className="flex text-yellow-400 text-xs mt-4">
+                        <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
+                    </div>
+                </div>
+
+                {/* Testi 3 */}
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative">
+                    <i className="fa-solid fa-quote-right text-4xl text-slate-100 absolute top-4 right-4"></i>
+                    <div className="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" className="w-12 h-12 rounded-full object-cover" />
+                        <div>
+                            <h4 className="font-bold text-slate-900 text-sm">Ust. Budi Santoso</h4>
+                            <p className="text-xs text-slate-500">Ketua Yayasan Dakwah Malang</p>
+                        </div>
+                    </div>
+                    <p className="text-slate-600 text-sm italic leading-relaxed">
+                        "Villa Quran Baron berhasil memadukan ketenangan suasana villa dengan ketatnya disiplin ilmu. Tempat yang sempurna untuk kaderisasi umat."
+                    </p>
+                    <div className="flex text-yellow-400 text-xs mt-4">
+                        <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
   )
 }
