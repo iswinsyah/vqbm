@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import FrontLayout from './layouts/FrontLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import Home from './pages/Home';
@@ -7,7 +7,6 @@ import Dashboard from './pages/admin/Dashboard';
 
 function App() {
   return (
-    <BrowserRouter>
       <Routes>
         {/* A. Tampilan Front End (Website Utama) */}
         <Route path="/" element={<FrontLayout />}>
@@ -23,7 +22,6 @@ function App() {
           <Route path="pages" element={<div className="p-4">Halaman Kelola Halaman (Coming Soon)</div>} />
         </Route>
       </Routes>
-    </BrowserRouter>
   );
 }
 
