@@ -14,7 +14,7 @@ const Navbar = () => {
   }, [])
 
   return (
-    <nav className={`sticky top-0 w-full z-50 bg-white transition-all duration-300 ${scrolled ? 'shadow-md' : ''}`} id="navbar">
+    <nav className={`fixed top-0 w-full z-50 bg-white transition-all duration-300 ${scrolled ? 'shadow-md' : 'border-b border-slate-100'}`} id="navbar">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
