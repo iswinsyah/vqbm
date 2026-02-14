@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import FrontLayout from './layouts/FrontLayout';
-import DashboardLayout from './layouts/DashboardLayout';
-import Home from './pages/Home';
-import Post from './pages/Post';
-import Dashboard from './pages/admin/Dashboard';
+import FrontLayout from './FrontLayout';
+import DashboardLayout from './DashboardLayout';
+import Home from './Home';
+import Post from './Post';
+import Dashboard from './Dashboard';
 
 function App() {
   return (
