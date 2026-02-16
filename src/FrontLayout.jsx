@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ChatWidget from './components/ChatWidget';
 
 const FrontLayout = () => {
   return (
@@ -11,6 +12,7 @@ const FrontLayout = () => {
         <Outlet />
       </main>
       <Footer />
+      <ChatWidget />
     </div>
   );
 };
