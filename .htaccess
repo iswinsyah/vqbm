@@ -1,10 +1,8 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  # Arahkan domain utama ke dist/index.html
-  RewriteRule ^$ dist/index.html [L]
-  
-  # Arahkan semua file lain ke folder dist/
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ dist/$1 [L]
+  RewriteRule . /index.html [L]
 </IfModule>

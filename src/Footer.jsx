@@ -73,7 +73,7 @@ const Footer = () => {
             </div>
 
             <div className="border-t border-slate-800 pt-8 text-center">
-                <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} Villa Quran Baron Malang. Hak Cipta Dilindungi Undang-Undang. | v:debug-{new Date().getTime()}</p>
+                <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} Villa Quran Baron Malang. Hak Cipta Dilindungi Undang-Undang. | <span className="text-yellow-500 font-bold">Update Terbaru Aktif</span></p>
             </div>
         </footer>
     )
