@@ -32,8 +32,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: ./public_html/
-          protocol: ftps
+          server-dir: public_html/
+          protocol: ftp
           port: 21
           # Use 'loose' if strict fails due to certificate issues on shared hosting
           security: loose
