@@ -12,7 +12,7 @@ const NewsSection = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-end mb-10">
                     <div>
-                        <h2 className="text-3xl font-serif font-bold text-slate-900">{settings.home?.news?.title || "Kabar Villa Quran"}</h2>
+                        <h2 className="text-3xl font-bold text-slate-900" style={{ fontFamily: 'var(--font-h2)' }}>{settings.home?.news?.title || "Kabar Villa Quran"}</h2>
                         <p className="text-slate-500 mt-2">{settings.home?.news?.subtitle || "Update kegiatan santri dan prestasi terbaru."}</p>
                     </div>
                     <a href="#" className="hidden md:inline-block px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:border-primary hover:text-primary transition text-sm font-medium">Lihat Semua Berita</a>

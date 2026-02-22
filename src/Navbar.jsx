@@ -77,8 +77,8 @@ const Navbar = () => {
               </div>
             )}
             <div className="flex flex-col">
-              <h1 className="font-serif font-bold text-lg text-primary leading-none">{settings.title}</h1>
-              <span className="text-secondary text-xs font-sans font-bold uppercase tracking-widest mt-1">{settings.description}</span>
+              <h1 className="font-bold text-lg text-primary leading-none" style={{ fontFamily: 'var(--font-h1)' }}>{settings.title}</h1>
+              <span className="text-secondary text-xs font-bold uppercase tracking-widest mt-1">{settings.description}</span>
             </div>
           </Link>
 
@@ -86,7 +86,7 @@ const Navbar = () => {
           <div className="hidden lg:flex space-x-6 items-center">
             {parentMenus.map(menu => renderMenuItem(menu))}
 
-            <a href="#psb" className="bg-primary hover:bg-green-800 text-white px-5 py-2 rounded-lg font-medium transition shadow-md flex items-center gap-2 ml-4">
+            <a href="#psb" className="bg-[var(--color-btn-urgent)] hover:opacity-90 text-white px-5 py-2 rounded-lg font-medium transition shadow-md flex items-center gap-2 ml-4">
               <i className="fa-solid fa-user-plus text-sm"></i> PSB Online
             </a>
           </div>

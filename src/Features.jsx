@@ -9,8 +9,8 @@ const Features = () => {
         <section id="program" className="py-20 bg-slate-50 border-t border-slate-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-serif font-bold text-slate-900">{feats.sectionTitle || "Program Unggulan"}</h2>
-                    <div className="w-24 h-1 bg-secondary mx-auto mt-4 rounded-full"></div>
+                    <h2 className="text-3xl font-bold text-slate-900" style={{ fontFamily: 'var(--font-h2)' }}>{feats.sectionTitle || "Program Unggulan"}</h2>
+                    <div className="w-24 h-1 bg-[var(--color-secondary)] mx-auto mt-4 rounded-full"></div>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">

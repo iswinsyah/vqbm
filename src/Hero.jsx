@@ -22,14 +22,14 @@ const Hero = () => {
                     <span className="inline-block py-1 px-3 rounded bg-secondary/20 text-secondary border border-secondary/50 text-xs font-bold tracking-wider mb-4 uppercase backdrop-blur-md">
                         {settings.home?.hero?.badge || 'Official Website'}
                     </span>
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold text-white leading-tight mb-6">
+                    <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6" style={{ fontFamily: 'var(--font-h1)' }}>
                         {settings.heroTitle}
                     </h1>
-                    <p className="text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl border-l-4 border-secondary pl-4">
+                    <p className="text-lg text-slate-200 mb-8 leading-relaxed max-w-2xl border-l-4 border-[var(--color-secondary)] pl-4">
                         {settings.heroSubtitle}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <a href={settings.home?.hero?.btn1Link || "#profil"} className="inline-block px-8 py-3 bg-white text-primary hover:bg-slate-100 rounded-lg font-bold transition text-center shadow-lg">
+                        <a href={settings.home?.hero?.btn1Link || "#profil"} className="inline-block px-8 py-3 bg-[var(--color-btn-reg)] text-white hover:opacity-90 rounded-lg font-bold transition text-center shadow-lg">
                             {settings.home?.hero?.btn1Text || "Profil Lembaga"}
                         </a>
                         <a href={settings.home?.hero?.btn2Link || "#program"} className="inline-block px-8 py-3 bg-transparent border border-white text-white hover:bg-white/10 rounded-lg font-semibold transition text-center backdrop-blur-sm">

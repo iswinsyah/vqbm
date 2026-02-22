@@ -24,11 +24,11 @@ const Profile = () => {
 
                     {/* Teks Sambutan */}
                     <div className="w-full md:w-2/3">
-                        <h2 className="text-secondary font-bold tracking-wide uppercase text-sm mb-2">{ps.title || "Ahlan Wa Sahlan"}</h2>
-                        <h3 className="text-3xl font-serif font-bold text-slate-900 mb-6">{ps.welcomeHeadline || "Membangun Generasi Qurani"}</h3>
+                        <h2 className="font-bold tracking-wide uppercase text-sm mb-2" style={{ color: 'var(--color-secondary)' }}>{ps.title || "Ahlan Wa Sahlan"}</h2>
+                        <h3 className="text-3xl font-bold text-slate-900 mb-6" style={{ fontFamily: 'var(--font-h3)' }}>{ps.welcomeHeadline || "Membangun Generasi Qurani"}</h3>
                         <div className="prose prose-slate text-slate-600 leading-relaxed">
                             <p className="mb-4">
-                                <span className="text-4xl float-left mr-2 font-serif text-primary">"</span>
+                                <span className="text-4xl float-left mr-2 font-bold" style={{ fontFamily: 'var(--font-h1)', color: 'var(--color-primary)' }}>"</span>
                                 {ps.welcomeContent || "Konten sambutan belum diisi."}
                             </p>
                         </div>
