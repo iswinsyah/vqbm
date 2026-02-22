@@ -36,6 +36,8 @@ jobs:
           protocol: ftps
           port: 21
           # Use 'loose' if strict fails due to certificate issues on shared hosting
-          security: loose 
-          # Create a state file on server to only upload changed files next time
-          state-name: .ftp-deploy-sync-state.json
+          security: loose
+          # Hapus state agar GitHub dipaksa kirim ULANG semua file
+          # state-name: .ftp-deploy-sync-state.json
+          # Menambahkan dry-run: false untuk memastikan benar-benar terkirim
+          dry-run: false
