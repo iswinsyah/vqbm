@@ -73,6 +73,7 @@ const Settings = () => {
                     <TabButton id="features" label="Fitur/Program" icon="fa-star" />
                     <TabButton id="news" label="Berita" icon="fa-newspaper" />
                     <TabButton id="ai" label="AI Chatbot" icon="fa-robot" />
+                    <TabButton id="design" label="Tampilan" icon="fa-palette" />
                 </div>
 
                 {/* TAB: GENERAL */}
@@ -87,16 +88,83 @@ const Settings = () => {
                             <input type="text" name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Warna Utama</label>
-                            <div className="flex gap-2">
-                                <input type="color" name="primaryColor" value={formData.primaryColor || '#064E3B'} onChange={handleChange} className="h-10 w-20 rounded border cursor-pointer" />
-                                <input type="text" name="primaryColor" value={formData.primaryColor || '#064E3B'} onChange={handleChange} className="flex-1 px-4 py-2 border rounded-lg uppercase" />
-                            </div>
-                        </div>
-                        <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Logo URL/Filename</label>
                             <input type="text" name="logo" value={formData.logo || ''} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="logo.png atau https://..." />
                         </div>
+                    </div>
+                )}
+
+                {/* TAB: DESIGN (NEW) */}
+                {activeTab === 'design' && (
+                    <div className="space-y-8 animate-fade-in">
+                        <section>
+                            <h3 className="text-lg font-bold text-emerald-800 mb-4 flex items-center gap-2">
+                                <i className="fa-solid fa-font"></i> Pengaturan Font (Google Fonts)
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {[
+                                    { label: 'Font Judul H1', name: 'fontH1' },
+                                    { label: 'Font Judul H2', name: 'fontH2' },
+                                    { label: 'Font Judul H3', name: 'fontH3' },
+                                    { label: 'Font Judul H4', name: 'fontH4' },
+                                    { label: 'Font Isi (Body/Paragraf)', name: 'fontBody' }
+                                ].map(f => (
+                                    <div key={f.name}>
+                                        <label className="block text-xs font-bold text-gray-500 mb-1">{f.label}</label>
+                                        <select
+                                            name={f.name}
+                                            value={formData[f.name] || 'Inter'}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-2 border rounded-lg"
+                                            style={{ fontFamily: formData[f.name] }}
+                                        >
+                                            <optgroup label="Sans Serif (Modern)">
+                                                <option value="Inter">Inter (Default)</option>
+                                                <option value="Poppins">Poppins</option>
+                                                <option value="Roboto">Roboto</option>
+                                                <option value="Montserrat">Montserrat</option>
+                                                <option value="Outfit">Outfit</option>
+                                                <option value="Open Sans">Open Sans</option>
+                                            </optgroup>
+                                            <optgroup label="Serif (Klasik/Formal)">
+                                                <option value="Playfair Display">Playfair Display</option>
+                                                <option value="Merriweather">Merriweather</option>
+                                                <option value="Lora">Lora</option>
+                                                <option value="Bree Serif">Bree Serif</option>
+                                            </optgroup>
+                                            <optgroup label="Islami/Arabic Style">
+                                                <option value="Almarai">Almarai (Modern Arabic)</option>
+                                                <option value="Amiri">Amiri (Classic Arabic)</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="pt-6 border-t">
+                            <h3 className="text-lg font-bold text-emerald-800 mb-4 flex items-center gap-2">
+                                <i className="fa-solid fa-droplet"></i> Skema Warna
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {[
+                                    { label: 'Warna Utama', name: 'primaryColor' },
+                                    { label: 'Warna Kedua', name: 'secondaryColor' },
+                                    { label: 'Warna Background', name: 'backgroundColor' },
+                                    { label: 'Tombol Urgent', name: 'urgentBtnColor' },
+                                    { label: 'Tombol Reguler', name: 'regularBtnColor' },
+                                    { label: 'Warna Hyperlink', name: 'linkColor' }
+                                ].map(c => (
+                                    <div key={c.name}>
+                                        <label className="block text-xs font-bold text-gray-500 mb-1">{c.label}</label>
+                                        <div className="flex gap-2">
+                                            <input type="color" name={c.name} value={formData[c.name] || '#000000'} onChange={handleChange} className="h-10 w-12 rounded border cursor-pointer" />
+                                            <input type="text" name={c.name} value={formData[c.name] || '#000000'} onChange={handleChange} className="flex-1 px-3 py-2 border rounded-lg text-xs uppercase font-mono" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
                     </div>
                 )}
 

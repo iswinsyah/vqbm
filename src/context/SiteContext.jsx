@@ -10,9 +10,19 @@ export const SiteProvider = ({ children }) => {
     description: 'Pusat Pendidikan Al-Quran Terbaik di Malang',
     heroTitle: 'Generasi Qurani Berakhlaq Mulia',
     heroSubtitle: 'Mewujudkan generasi penghafal Al-Quran yang berkarakter, cerdas, dan mandiri.',
-    primaryColor: '#064E3B', // Emerald Green
-    heroImage: '', // URL or path to image
-    logo: '', // URL or path to logo
+    primaryColor: '#064E3B',
+    secondaryColor: '#D97706',
+    backgroundColor: '#FFFFFF',
+    urgentBtnColor: '#DC2626',
+    regularBtnColor: '#064E3B',
+    linkColor: '#2563EB',
+
+    // Fonts
+    fontH1: 'Inter',
+    fontH2: 'Inter',
+    fontH3: 'Inter',
+    fontH4: 'Inter',
+    fontBody: 'Inter',
 
     // Frontpage Sections
     home: {
@@ -124,8 +134,39 @@ export const SiteProvider = ({ children }) => {
 
   // Update CSS variables when settings change
   useEffect(() => {
-    document.documentElement.style.setProperty('--color-primary', settings.primaryColor);
-  }, [settings.primaryColor]);
+    const root = document.documentElement.style;
+    root.setProperty('--color-primary', settings.primaryColor);
+    root.setProperty('--color-secondary', settings.secondaryColor);
+    root.setProperty('--color-bg', settings.backgroundColor);
+    root.setProperty('--color-btn-urgent', settings.urgentBtnColor);
+    root.setProperty('--color-btn-reg', settings.regularBtnColor);
+    root.setProperty('--color-link', settings.linkColor);
+
+    root.setProperty('--font-h1', settings.fontH1);
+    root.setProperty('--font-h2', settings.fontH2);
+    root.setProperty('--font-h3', settings.fontH3);
+    root.setProperty('--font-h4', settings.fontH4);
+    root.setProperty('--font-body', settings.fontBody);
+
+    // Dynamically load Google Fonts if not already there
+    const fontsToLoad = [settings.fontH1, settings.fontH2, settings.fontH3, settings.fontH4, settings.fontBody];
+    const uniqueFonts = [...new Set(fontsToLoad)];
+    const fontId = 'dynamic-google-fonts';
+    let link = document.getElementById(fontId);
+    if (!link) {
+      link = document.createElement('link');
+      link.id = fontId;
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    const fontQuery = uniqueFonts.map(f => f.replace(/ /g, '+')).join('|');
+    link.href = `https://fonts.googleapis.com/css2?family=${fontQuery}:wght@400;500;600;700&display=swap`;
+
+  }, [
+    settings.primaryColor, settings.secondaryColor, settings.backgroundColor,
+    settings.urgentBtnColor, settings.regularBtnColor, settings.linkColor,
+    settings.fontH1, settings.fontH2, settings.fontH3, settings.fontH4, settings.fontBody
+  ]);
 
   const updateSettings = (newSettings) => {
     setSettings((prev) => {

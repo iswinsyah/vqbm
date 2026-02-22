@@ -1,10 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #064E3B; /* Emerald Green */
-  --color-secondary: #D97706; /* Gold */
-  --color-dark: #0F172A; /* Slate 900 */
-  --color-light: #F8FAFC; /* Slate 50 */
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Merriweather', serif;
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-dark: #0F172A;
+  --color-light: var(--color-bg);
+  
+  --color-urgent: var(--color-btn-urgent);
+  --color-reg: var(--color-btn-reg);
+  --color-link: var(--color-link);
+
+  --font-sans: var(--font-body), sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--color-bg)] text-gray-900;
+    font-family: var(--font-body), sans-serif;
+  }
+  
+  h1 { font-family: var(--font-h1), sans-serif; }
+  h2 { font-family: var(--font-h2), sans-serif; }
+  h3 { font-family: var(--font-h3), sans-serif; }
+  h4 { font-family: var(--font-h4), sans-serif; }
+  
+  a {
+    @apply text-[var(--color-link)] hover:opacity-80 transition;
+  }
 }
