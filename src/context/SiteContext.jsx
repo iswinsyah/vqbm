@@ -149,8 +149,14 @@ export const SiteProvider = ({ children }) => {
     root.setProperty('--font-body', settings.fontBody);
 
     // Dynamically load Google Fonts if not already there
-    const fontsToLoad = [settings.fontH1, settings.fontH2, settings.fontH3, settings.fontH4, settings.fontBody];
-    const uniqueFonts = [...new Set(fontsToLoad)];
+    const fontsToLoad = [
+      settings.fontH1 || 'Inter',
+      settings.fontH2 || 'Inter',
+      settings.fontH3 || 'Inter',
+      settings.fontH4 || 'Inter',
+      settings.fontBody || 'Inter'
+    ];
+    const uniqueFonts = [...new Set(fontsToLoad)].filter(f => typeof f === 'string');
     const fontId = 'dynamic-google-fonts';
     let link = document.getElementById(fontId);
     if (!link) {
