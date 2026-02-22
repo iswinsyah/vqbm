@@ -118,6 +118,13 @@ const Settings = () => {
                                             className="w-full px-4 py-2 border rounded-lg"
                                             style={{ fontFamily: formData[f.name] }}
                                         >
+                                            <optgroup label="Font Branding & Condensed (Tegas)">
+                                                <option value="Bebas Neue">Bebas Neue (Mirip Marlin)</option>
+                                                <option value="Saira Extra Condensed">Saira Extra Condensed</option>
+                                                <option value="Barlow Condensed">Barlow Condensed</option>
+                                                <option value="Oswald">Oswald</option>
+                                                <option value="Anton">Anton</option>
+                                            </optgroup>
                                             <optgroup label="Sans Serif (Modern)">
                                                 <option value="Inter">Inter (Default)</option>
                                                 <option value="Poppins">Poppins</option>
