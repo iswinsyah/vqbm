@@ -9,6 +9,7 @@ import Settings from './admin/Settings';
 import PostManager from './admin/PostManager';
 import PageManager from './admin/PageManager';
 import MenuManager from './admin/MenuManager';
+import ManageTestimonials from './components/ManageTestimonials';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="posts" element={<PostManager />} />
         <Route path="pages" element={<PageManager />} />
         <Route path="menus" element={<MenuManager />} />
+        <Route path="testimonials" element={<ManageTestimonials />} />
         <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>

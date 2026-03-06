@@ -10,6 +10,7 @@ const DashboardLayout = () => {
           <Link to="/admin" className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Dashboard</Link>
           <Link to="/admin/posts" className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Semua Post</Link>
           <Link to="/admin/pages" className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Semua Halaman</Link>
+          <Link to="/admin/testimonials" className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Testimoni</Link>
           <div className="mt-6 pt-6 border-t border-gray-800">
             <Link to="/" className="block py-3 px-6 text-gray-400 hover:text-white hover:bg-gray-800">← Lihat Website</Link>
           </div>
