@@ -1,6 +1,6 @@
 import Hero from './Hero';
 import Features from './Features';
-import Testimonials from './Testimonials';
+import Testimonials from './components/Testimonials';
 import Gallery from './Gallery';
 import Profile from './Profile';
 import Activities from './Activities';
