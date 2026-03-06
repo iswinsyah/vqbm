@@ -26,12 +26,24 @@ const DashboardLayout = () => {
           </button>
         </div>
         <nav className="mt-6">
-          <Link to="/admin" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Dashboard</Link>
-          <Link to="/admin/posts" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Semua Post</Link>
-          <Link to="/admin/pages" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Semua Halaman</Link>
-          <Link to="/admin/testimonials" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Testimoni</Link>
-          <Link to="/admin/menus" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Pengaturan Menu</Link>
-          <Link to="/admin/settings" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">Pengaturan Situs</Link>
+          <Link to="/admin" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-gauge w-6"></i> Dashboard
+          </Link>
+          <Link to="/admin/posts" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-newspaper w-6"></i> Semua Post
+          </Link>
+          <Link to="/admin/pages" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-file-lines w-6"></i> Semua Halaman
+          </Link>
+          <Link to="/admin/testimonials" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-quote-right w-6"></i> Testimoni
+          </Link>
+          <Link to="/admin/menus" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-bars w-6"></i> Pengaturan Menu
+          </Link>
+          <Link to="/admin/settings" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-gear w-6"></i> Pengaturan Situs
+          </Link>
           <div className="mt-6 pt-6 border-t border-gray-800">
             <Link to="/" className="block py-3 px-6 text-gray-400 hover:text-white hover:bg-gray-800">← Lihat Website</Link>
           </div>
