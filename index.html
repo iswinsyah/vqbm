@@ -1,26 +1,66 @@
-<!doctype html>
-<!-- Deploy Try 5 - Empty HTAccess -->
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Website Resmi Villa Quran Baron Malang" />
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700;900&display=swap"
-    rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <title>Villa Quran Baron Malang</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Villa Quran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+<body class="bg-gray-100 font-sans">
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+<div class="min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex-shrink-0 hidden md:block">
+        <div class="p-6 text-xl font-bold border-b border-gray-800">Dapur Admin</div>
+        <nav class="mt-6">
+            <a href="/admin/index.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-gauge w-6"></i> Dashboard</a>
+            <a href="/admin/posts.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-newspaper w-6"></i> Semua Post</a>
+            <a href="/admin/pages.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
+            <a href="/admin/testimonials.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-quote-right w-6"></i> Testimoni</a>
+            <a href="/admin/menus.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-bars w-6"></i> Pengaturan Menu</a>
+            <a href="/admin/settings.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gear w-6"></i> Pengaturan Situs</a>
+            <div class="mt-6 pt-6 border-t border-gray-800">
+                <a href="/" class="block py-3 px-6 text-gray-400 hover:text-white hover:bg-gray-800">← Lihat Website</a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Total Post</h3>
+                <p class="text-3xl font-bold text-gray-900 mt-2" id="count-posts">0</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Halaman</h3>
+                <p class="text-3xl font-bold text-gray-900 mt-2" id="count-pages">0</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Testimoni</h3>
+                <p class="text-3xl font-bold text-gray-900 mt-2" id="count-testimonials">0</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-lg font-bold text-gray-900 mb-4">Selamat Datang, Admin!</h2>
+            <p class="text-gray-600">Gunakan menu di sebelah kiri untuk mengelola konten website Villa Quran Baron Malang.</p>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Load stats from LocalStorage
+    const posts = JSON.parse(localStorage.getItem('sitePosts') || '[]');
+    const pages = JSON.parse(localStorage.getItem('sitePages') || '[]');
+    const testimonials = JSON.parse(localStorage.getItem('siteTestimonials') || '[]');
+    
+    document.getElementById('count-posts').innerText = posts.length;
+    document.getElementById('count-pages').innerText = pages.length;
+    document.getElementById('count-testimonials').innerText = testimonials.length;
+</script>
 </body>
-
 </html>

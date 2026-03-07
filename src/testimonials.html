@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Kelola Testimoni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<div class="min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex-shrink-0">
+        <div class="p-6 text-xl font-bold border-b border-gray-800">Dapur Admin</div>
+        <nav class="mt-6">
+            <a href="/admin/index.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gauge w-6"></i> Dashboard</a>
+            <a href="/admin/posts.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-newspaper w-6"></i> Semua Post</a>
+            <a href="/admin/pages.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
+            <a href="/admin/testimonials.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-quote-right w-6"></i> Testimoni</a>
+            <a href="/admin/menus.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-bars w-6"></i> Pengaturan Menu</a>
+            <a href="/admin/settings.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gear w-6"></i> Pengaturan Situs</a>
+            <div class="mt-6 pt-6 border-t border-gray-800">
+                <a href="/" class="block py-3 px-6 text-gray-400 hover:text-white hover:bg-gray-800">← Lihat Website</a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <div class="space-y-8 animate-fade-in">
+            <!-- Form Tambah -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Tambah Testimoni Baru</h2>
+                <form id="testimonial-form" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Nama Tokoh/Wali</label>
+                            <input type="text" name="name" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Jabatan/Status</label>
+                            <input type="text" name="role" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Contoh: Wali Santri Angkatan 1" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Foto (URL)</label>
+                        <input type="text" name="image" class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="https://..." />
+                        <p class="text-xs text-gray-400 mt-1">Kosongkan jika tidak ada foto (akan pakai avatar default).</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Isi Testimoni</label>
+                        <textarea name="content" rows="3" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea>
+                    </div>
+                    <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold transition">
+                        <i class="fa-solid fa-plus mr-2"></i> Tambah Testimoni
+                    </button>
+                </form>
+            </div>
+
+            <!-- Daftar Testimoni -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Daftar Testimoni Aktif</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Isi</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testimonial-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Rows will be injected here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('testimonial-form');
+        const tableBody = document.getElementById('testimonial-table-body');
+        const STORAGE_KEY = 'siteTestimonials';
+
+        // --- Data Functions ---
+        const getTestimonials = () => {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        };
+
+        const saveTestimonials = (testimonials) => {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(testimonials));
+        };
+
+        // --- Render Function ---
+        const renderTable = () => {
+            const testimonials = getTestimonials();
+            tableBody.innerHTML = ''; // Clear table
+            if (testimonials.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-gray-500">Belum ada testimoni.</td></tr>';
+                return;
+            }
+            testimonials.forEach(t => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${t.name}</div>
+                        <div class="text-xs text-gray-500">${t.role}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 max-w-md truncate">${t.content}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button data-id="${t.id}" class="delete-btn text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded-full">Hapus</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        };
+
+        // --- Event Handlers ---
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const newTestimonial = {
+                id: Date.now(),
+                name: formData.get('name'),
+                role: formData.get('role'),
+                content: formData.get('content'),
+                image: formData.get('image'),
+                rating: 5
+            };
+            
+            const testimonials = getTestimonials();
+            saveTestimonials([newTestimonial, ...testimonials]);
+            
+            form.reset();
+            renderTable();
+            alert('Testimoni berhasil ditambahkan!');
+        });
+
+        tableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-btn')) {
+                const id = parseInt(e.target.dataset.id);
+                if (confirm('Yakin ingin menghapus testimoni ini?')) {
+                    let testimonials = getTestimonials();
+                    testimonials = testimonials.filter(t => t.id !== id);
+                    saveTestimonials(testimonials);
+                    renderTable();
+                }
+            }
+        });
+
+        // Initial render
+        renderTable();
+    });
+</script>
+
+</body>
+</html>

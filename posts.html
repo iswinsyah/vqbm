@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Postingan - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+<div class="min-h-screen flex">
+    <aside class="w-64 bg-gray-900 text-white flex-shrink-0 hidden md:block">
+        <div class="p-6 text-xl font-bold border-b border-gray-800">Dapur Admin</div>
+        <nav class="mt-6">
+            <a href="/admin/index.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gauge w-6"></i> Dashboard</a>
+            <a href="/admin/posts.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-newspaper w-6"></i> Semua Post</a>
+            <a href="/admin/pages.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
+            <a href="/admin/testimonials.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-quote-right w-6"></i> Testimoni</a>
+            <a href="/admin/menus.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-bars w-6"></i> Pengaturan Menu</a>
+            <a href="/admin/settings.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gear w-6"></i> Pengaturan Situs</a>
+            <div class="mt-6 pt-6 border-t border-gray-800">
+                <a href="/" class="block py-3 px-6 text-gray-400 hover:text-white hover:bg-gray-800">← Lihat Website</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <div class="space-y-8">
+            <!-- Form -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Tambah / Edit Postingan</h2>
+                <form id="post-form" class="space-y-4">
+                    <input type="hidden" name="id" id="post-id">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Judul</label>
+                        <input type="text" name="title" id="title" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Kategori</label>
+                            <input type="text" name="category" id="category" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Tanggal</label>
+                            <input type="date" name="date" id="date" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Gambar (URL)</label>
+                        <input type="text" name="image" id="image" class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="https://...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Konten</label>
+                        <textarea name="content" id="content" rows="5" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Simpan</button>
+                        <button type="button" id="btn-cancel" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 hidden">Batal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Daftar Postingan</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="posts-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('post-form');
+        const tableBody = document.getElementById('posts-table-body');
+        const btnCancel = document.getElementById('btn-cancel');
+        let posts = JSON.parse(localStorage.getItem('sitePosts') || '[]');
+
+        const render = () => {
+            tableBody.innerHTML = posts.length ? '' : '<tr><td colspan="3" class="text-center py-4 text-gray-500">Belum ada data.</td></tr>';
+            posts.forEach(p => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap font-medium">${p.title}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">${p.category}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onclick="editPost(${p.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                        <button onclick="deletePost(${p.id})" class="text-red-600 hover:text-red-900">Hapus</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        };
+
+        window.editPost = (id) => {
+            const p = posts.find(x => x.id === id);
+            if(p) {
+                document.getElementById('post-id').value = p.id;
+                document.getElementById('title').value = p.title;
+                document.getElementById('category').value = p.category;
+                document.getElementById('date').value = p.date;
+                document.getElementById('image').value = p.image;
+                document.getElementById('content').value = p.content;
+                btnCancel.classList.remove('hidden');
+                window.scrollTo(0,0);
+            }
+        };
+
+        window.deletePost = (id) => {
+            if(confirm('Hapus postingan ini?')) {
+                posts = posts.filter(p => p.id !== id);
+                localStorage.setItem('sitePosts', JSON.stringify(posts));
+                render();
+            }
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('post-id').value;
+            const data = {
+                id: id ? parseInt(id) : Date.now(),
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                date: document.getElementById('date').value,
+                image: document.getElementById('image').value,
+                content: document.getElementById('content').value
+            };
+
+            if(id) {
+                posts = posts.map(p => p.id === parseInt(id) ? data : p);
+            } else {
+                posts.unshift(data);
+            }
+            
+            localStorage.setItem('sitePosts', JSON.stringify(posts));
+            form.reset();
+            document.getElementById('post-id').value = '';
+            btnCancel.classList.add('hidden');
+            render();
+        });
+
+        btnCancel.addEventListener('click', () => {
+            form.reset();
+            document.getElementById('post-id').value = '';
+            btnCancel.classList.add('hidden');
+        });
+
+        render();
+    });
+</script>
+</body>
+</html>
