@@ -27,11 +27,16 @@ jobs:
 
       - name: 🗂️ Susun File Admin & PHP ke folder dist
         run: |
-          # 1. Pastikan folder admin ada
+          # 1. Pastikan folder tujuan ada
           mkdir -p dist/admin
           
-          # 2. Copy file HTML admin dari folder admin_static
-          cp admin_static/*.html dist/admin/
+          # 2. Salin file admin (gunakan -r agar lebih aman)
+          if [ -d "admin_static" ]; then
+            cp -r admin_static/. dist/admin/
+          else
+            echo "Folder admin_static tidak ditemukan!"
+            exit 1
+          fi
           
           # 3. Pindahkan semua API PHP ke folder root dist
           cp *.php dist/ || true
