@@ -31,7 +31,7 @@
     <main class="flex-1 p-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                 <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Total Post</h3>
                 <p class="text-3xl font-bold text-gray-900 mt-2" id="count-posts">0</p>
@@ -44,6 +44,10 @@
                 <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Testimoni</h3>
                 <p class="text-3xl font-bold text-gray-900 mt-2" id="count-testimonials">0</p>
             </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wider">Total Agen</h3>
+                <p class="text-3xl font-bold text-gray-900 mt-2" id="count-agents">0</p>
+            </div>
         </div>
 
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -54,14 +58,24 @@
 </div>
 
 <script>
-    // Load stats from LocalStorage
-    const posts = JSON.parse(localStorage.getItem('sitePosts') || '[]');
-    const pages = JSON.parse(localStorage.getItem('sitePages') || '[]');
-    const testimonials = JSON.parse(localStorage.getItem('siteTestimonials') || '[]');
-    
-    document.getElementById('count-posts').innerText = posts.length;
-    document.getElementById('count-pages').innerText = pages.length;
-    document.getElementById('count-testimonials').innerText = testimonials.length;
+    document.addEventListener('DOMContentLoaded', () => {
+        const fetchCount = async (endpoint, elementId) => {
+            try {
+                const res = await fetch(endpoint);
+                if (!res.ok) return;
+                const data = await res.json();
+                document.getElementById(elementId).innerText = data.length || 0;
+            } catch (e) {
+                console.error('Error fetching data:', e);
+                document.getElementById(elementId).innerText = '-';
+            }
+        };
+
+        fetchCount('/posts.php', 'count-posts');
+        fetchCount('/pages.php', 'count-pages');
+        fetchCount('/testimonials.php', 'count-testimonials');
+        fetchCount('/agents.php', 'count-agents');
+    });
 </script>
 </body>
 </html>
