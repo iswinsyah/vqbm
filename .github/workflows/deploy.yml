@@ -27,11 +27,11 @@ jobs:
 
       - name: 🗂️ Susun File Admin & PHP ke folder dist
         run: |
-          # 1. Pastikan folder tujuan ada (kita pakai nama baru untuk memecah cache)
-          mkdir -p dist/admin-baru
+          # 1. Pastikan folder tujuan ada
+          mkdir -p dist/admin
           
           # 2. Salin semua file admin dari admin_static
-          cp -r admin_static/. dist/admin-baru/
+          cp -r admin_static/. dist/admin/
           
           # 3. Pindahkan semua API PHP ke folder root dist
           cp *.php dist/ || true
@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: ./
+          server-dir: public_html/web/
           dangerous-clean-slate: true
           protocol: ftp
           port: 21
