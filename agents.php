@@ -9,7 +9,7 @@ switch ($method) {
         $result = $conn->query($sql);
         $agents = [];
         
-        if ($result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $agen_id = $row['id'];
                 
