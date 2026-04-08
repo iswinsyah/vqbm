@@ -27,21 +27,16 @@ jobs:
 
       - name: 🗂️ Susun File Admin & PHP ke folder dist
         run: |
-          # 1. Pastikan folder tujuan ada
-          mkdir -p dist/admin
+          # 1. Pastikan folder tujuan ada (kita pakai nama baru untuk memecah cache)
+          mkdir -p dist/admin-baru
           
-          # 2. Salin file admin (gunakan -r agar lebih aman)
-          if [ -d "admin_static" ]; then
-            cp -r admin_static/. dist/admin/
-          else
-            echo "Folder admin_static tidak ditemukan!"
-            exit 1
-          fi
+          # 2. Salin semua file admin dari admin_static
+          cp -r admin_static/. dist/admin-baru/
           
           # 3. Pindahkan semua API PHP ke folder root dist
           cp *.php dist/ || true
 
-      - name: � Sync files (FTP)
+      - name: 🚀 Sync files (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -49,9 +44,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: ./
+          dangerous-clean-slate: true
           protocol: ftp
           port: 21
           # Use 'loose' if strict fails due to certificate issues on shared hosting
           security: loose
           dry-run: false
-          dangerous-clean-slate: true
