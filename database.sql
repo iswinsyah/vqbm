@@ -44,6 +44,15 @@ CREATE TABLE menus (
     FOREIGN KEY (parent_id) REFERENCES menus(id) ON DELETE CASCADE
 );
 
+-- Tabel untuk Agen
+CREATE TABLE agents (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    commission VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert Data Default untuk Settings
 INSERT INTO settings (setting_key, setting_value) VALUES 
 ('title', 'Villa Quran Baron Malang'),

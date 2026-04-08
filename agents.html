@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Halaman - Admin</title>
+    <title>Kelola Agen - Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -15,9 +15,9 @@
         <nav class="mt-6">
             <a href="/admin/index.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gauge w-6"></i> Dashboard</a>
             <a href="/admin/posts.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-newspaper w-6"></i> Semua Post</a>
-            <a href="/admin/pages.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
+            <a href="/admin/pages.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
             <a href="/admin/testimonials.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-quote-right w-6"></i> Testimoni</a>
-            <a href="/admin/agents.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-users w-6"></i> Data Agen</a>
+            <a href="/admin/agents.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-users w-6"></i> Data Agen</a>
             <a href="/admin/menus.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-bars w-6"></i> Pengaturan Menu</a>
             <a href="/admin/settings.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gear w-6"></i> Pengaturan Situs</a>
             <div class="mt-6 pt-6 border-t border-gray-800">
@@ -28,23 +28,24 @@
 
     <main class="flex-1 p-8">
         <div class="space-y-8">
+            <!-- Form -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">Tambah / Edit Halaman</h2>
-                <form id="page-form" class="space-y-4">
-                    <input type="hidden" name="id" id="page-id">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Tambah / Edit Agen</h2>
+                <form id="agent-form" class="space-y-4">
+                    <input type="hidden" name="id" id="agent-id">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nama Agen</label>
+                        <input type="text" name="name" id="name" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                    </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Judul Halaman</label>
-                            <input type="text" name="title" id="title" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                            <label class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label>
+                            <input type="text" name="phone" id="phone" required placeholder="Contoh: 081234567890" class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Slug (URL)</label>
-                            <input type="text" name="slug" id="slug" placeholder="contoh: tentang-kami" class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                            <label class="block text-sm font-medium text-gray-700">Komisi</label>
+                            <input type="text" name="commission" id="commission" required placeholder="Contoh: 10% atau Rp 50.000" class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
                         </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Konten</label>
-                        <textarea name="content" id="content" rows="8" required class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea>
                     </div>
                     <div class="flex gap-2">
                         <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Simpan</button>
@@ -53,18 +54,21 @@
                 </form>
             </div>
 
+            <!-- Table -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-6">Daftar Halaman</h2>
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Daftar Agen</h2>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Slug</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nomor</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nomor WhatsApp</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Komisi</th>
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="pages-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+                        <tbody id="agents-table-body" class="bg-white divide-y divide-gray-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -74,58 +78,59 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('page-form');
-        const tableBody = document.getElementById('pages-table-body');
+        const form = document.getElementById('agent-form');
+        const tableBody = document.getElementById('agents-table-body');
         const btnCancel = document.getElementById('btn-cancel');
-        let pages = [];
+        let agents = [];
 
-        // Fetch dari Database MySQL
-        const fetchPages = async () => {
+        const fetchAgents = async () => {
             try {
-                const res = await fetch('/pages.php');
-                pages = await res.json();
+                const res = await fetch('/agents.php');
+                agents = await res.json();
                 render();
             } catch (err) {
                 console.error('Gagal mengambil data:', err);
-                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
             }
         };
 
         const render = () => {
-            tableBody.innerHTML = pages.length ? '' : '<tr><td colspan="3" class="text-center py-4 text-gray-500">Belum ada halaman.</td></tr>';
-            pages.forEach(p => {
+            tableBody.innerHTML = agents.length ? '' : '<tr><td colspan="5" class="text-center py-4 text-gray-500">Belum ada data agen.</td></tr>';
+            agents.forEach((a, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap font-medium">${p.title}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">/${p.slug}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-500">${index + 1}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-medium">${a.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-500"><a href="https://wa.me/${a.phone.replace(/[^0-9]/g, '')}" target="_blank" class="text-emerald-600 hover:underline"><i class="fa-brands fa-whatsapp"></i> ${a.phone}</a></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">${a.commission}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button onclick="editPage(${p.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
-                        <button onclick="deletePage(${p.id})" class="text-red-600 hover:text-red-900">Hapus</button>
+                        <button onclick="editAgent(${a.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                        <button onclick="deleteAgent(${a.id})" class="text-red-600 hover:text-red-900">Hapus</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
             });
         };
 
-        window.editPage = (id) => {
-            const p = pages.find(x => x.id == id);
-            if(p) {
-                document.getElementById('page-id').value = p.id;
-                document.getElementById('title').value = p.title;
-                document.getElementById('slug').value = p.slug;
-                document.getElementById('content').value = p.content;
+        window.editAgent = (id) => {
+            const a = agents.find(x => x.id == id);
+            if(a) {
+                document.getElementById('agent-id').value = a.id;
+                document.getElementById('name').value = a.name;
+                document.getElementById('phone').value = a.phone;
+                document.getElementById('commission').value = a.commission;
                 btnCancel.classList.remove('hidden');
                 window.scrollTo(0,0);
             }
         };
 
-        window.deletePage = async (id) => {
-            if(confirm('Hapus halaman ini?')) {
+        window.deleteAgent = async (id) => {
+            if(confirm('Hapus agen ini?')) {
                 try {
-                    const res = await fetch(`/pages.php?id=${id}`, { method: 'DELETE' });
+                    const res = await fetch('/agents.php?id=' + id, { method: 'DELETE' });
                     const result = await res.json();
                     if(result.success) {
-                        fetchPages();
+                        fetchAgents();
                     } else {
                         alert(result.error || 'Gagal menghapus data');
                     }
@@ -137,32 +142,27 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = document.getElementById('page-id').value;
-            const title = document.getElementById('title').value;
-            let slug = document.getElementById('slug').value;
-            
-            if(!slug) slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-
-            const pageData = {
+            const id = document.getElementById('agent-id').value;
+            const agentData = {
                 id: id ? parseInt(id) : null,
-                title: title,
-                slug: slug,
-                content: document.getElementById('content').value
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                commission: document.getElementById('commission').value
             };
 
             try {
-                const res = await fetch('/pages.php', {
+                const res = await fetch('/agents.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(pageData)
+                    body: JSON.stringify(agentData)
                 });
                 const result = await res.json();
                 
                 if(result.success) {
                     form.reset();
-                    document.getElementById('page-id').value = '';
+                    document.getElementById('agent-id').value = '';
                     btnCancel.classList.add('hidden');
-                    fetchPages();
+                    fetchAgents();
                 } else {
                     alert(result.error || 'Gagal menyimpan data');
                 }
@@ -173,11 +173,11 @@
 
         btnCancel.addEventListener('click', () => {
             form.reset();
-            document.getElementById('page-id').value = '';
+            document.getElementById('agent-id').value = '';
             btnCancel.classList.add('hidden');
         });
 
-        fetchPages();
+        fetchAgents();
     });
 </script>
 </body>

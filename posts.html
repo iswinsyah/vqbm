@@ -17,6 +17,7 @@
             <a href="/admin/posts.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-newspaper w-6"></i> Semua Post</a>
             <a href="/admin/pages.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
             <a href="/admin/testimonials.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-quote-right w-6"></i> Testimoni</a>
+            <a href="/admin/agents.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-users w-6"></i> Data Agen</a>
             <a href="/admin/menus.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-bars w-6"></i> Pengaturan Menu</a>
             <a href="/admin/settings.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gear w-6"></i> Pengaturan Situs</a>
             <div class="mt-6 pt-6 border-t border-gray-800">
@@ -86,7 +87,19 @@
         const form = document.getElementById('post-form');
         const tableBody = document.getElementById('posts-table-body');
         const btnCancel = document.getElementById('btn-cancel');
-        let posts = JSON.parse(localStorage.getItem('sitePosts') || '[]');
+        let posts = [];
+
+        // Fetch dari Database MySQL
+        const fetchPosts = async () => {
+            try {
+                const res = await fetch('/posts.php');
+                posts = await res.json();
+                render();
+            } catch (err) {
+                console.error('Gagal mengambil data:', err);
+                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+            }
+        };
 
         const render = () => {
             tableBody.innerHTML = posts.length ? '' : '<tr><td colspan="3" class="text-center py-4 text-gray-500">Belum ada data.</td></tr>';
@@ -105,7 +118,7 @@
         };
 
         window.editPost = (id) => {
-            const p = posts.find(x => x.id === id);
+            const p = posts.find(x => x.id == id);
             if(p) {
                 document.getElementById('post-id').value = p.id;
                 document.getElementById('title').value = p.title;
@@ -118,19 +131,27 @@
             }
         };
 
-        window.deletePost = (id) => {
+        window.deletePost = async (id) => {
             if(confirm('Hapus postingan ini?')) {
-                posts = posts.filter(p => p.id !== id);
-                localStorage.setItem('sitePosts', JSON.stringify(posts));
-                render();
+                try {
+                    const res = await fetch(`/posts.php?id=${id}`, { method: 'DELETE' });
+                    const result = await res.json();
+                    if(result.success) {
+                        fetchPosts();
+                    } else {
+                        alert(result.error || 'Gagal menghapus data');
+                    }
+                } catch(err) {
+                    alert('Terjadi kesalahan jaringan');
+                }
             }
         };
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('post-id').value;
-            const data = {
-                id: id ? parseInt(id) : Date.now(),
+            const postData = {
+                id: id ? parseInt(id) : null,
                 title: document.getElementById('title').value,
                 category: document.getElementById('category').value,
                 date: document.getElementById('date').value,
@@ -138,17 +159,25 @@
                 content: document.getElementById('content').value
             };
 
-            if(id) {
-                posts = posts.map(p => p.id === parseInt(id) ? data : p);
-            } else {
-                posts.unshift(data);
+            try {
+                const res = await fetch('/posts.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData)
+                });
+                const result = await res.json();
+                
+                if(result.success) {
+                    form.reset();
+                    document.getElementById('post-id').value = '';
+                    btnCancel.classList.add('hidden');
+                    fetchPosts();
+                } else {
+                    alert(result.error || 'Gagal menyimpan data');
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan jaringan');
             }
-            
-            localStorage.setItem('sitePosts', JSON.stringify(posts));
-            form.reset();
-            document.getElementById('post-id').value = '';
-            btnCancel.classList.add('hidden');
-            render();
         });
 
         btnCancel.addEventListener('click', () => {
@@ -157,7 +186,7 @@
             btnCancel.classList.add('hidden');
         });
 
-        render();
+        fetchPosts();
     });
 </script>
 </body>
