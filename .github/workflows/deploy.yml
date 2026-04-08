@@ -32,8 +32,8 @@ jobs:
           
           # 2. Buat folder admin dan kumpulkan semua HTML dashboard ke dalamnya
           mkdir -p dist/admin
-          cp posts.html pages.html agents.html menus.html settings.html index.html dist/admin/ || true
-          cp testimonials.html dist/admin/ || true
+          cp index.html posts.html pages.html agents.html menus.html settings.html dist/admin/ || true
+          cp src/testimonials.html dist/admin/ || true
 
       - name: � Sync files (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

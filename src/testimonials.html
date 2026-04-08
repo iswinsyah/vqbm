@@ -22,6 +22,7 @@
             <a href="/admin/posts.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-newspaper w-6"></i> Semua Post</a>
             <a href="/admin/pages.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-file-lines w-6"></i> Semua Halaman</a>
             <a href="/admin/testimonials.html" class="block py-3 px-6 bg-gray-700 text-white border-l-4 border-emerald-500"><i class="fa-solid fa-quote-right w-6"></i> Testimoni</a>
+            <a href="/admin/agents.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-users w-6"></i> Data Agen</a>
             <a href="/admin/menus.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-bars w-6"></i> Pengaturan Menu</a>
             <a href="/admin/settings.html" class="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-emerald-500"><i class="fa-solid fa-gear w-6"></i> Pengaturan Situs</a>
             <div class="mt-6 pt-6 border-t border-gray-800">
@@ -88,22 +89,23 @@
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('testimonial-form');
         const tableBody = document.getElementById('testimonial-table-body');
-        const STORAGE_KEY = 'siteTestimonials';
+        let testimonials = [];
 
         // --- Data Functions ---
-        const getTestimonials = () => {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : [];
-        };
-
-        const saveTestimonials = (testimonials) => {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(testimonials));
+        const fetchTestimonials = async () => {
+            try {
+                const res = await fetch('/testimonials.php');
+                testimonials = await res.json();
+                renderTable();
+            } catch (err) {
+                console.error('Gagal mengambil data:', err);
+                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+            }
         };
 
         // --- Render Function ---
         const renderTable = () => {
-            const testimonials = getTestimonials();
-            tableBody.innerHTML = ''; // Clear table
+            tableBody.innerHTML = ''; 
             if (testimonials.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-gray-500">Belum ada testimoni.</td></tr>';
                 return;
@@ -125,11 +127,10 @@
         };
 
         // --- Event Handlers ---
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(form);
-            const newTestimonial = {
-                id: Date.now(),
+            const testimonialData = {
                 name: formData.get('name'),
                 role: formData.get('role'),
                 content: formData.get('content'),
@@ -137,28 +138,47 @@
                 rating: 5
             };
             
-            const testimonials = getTestimonials();
-            saveTestimonials([newTestimonial, ...testimonials]);
-            
-            form.reset();
-            renderTable();
-            alert('Testimoni berhasil ditambahkan!');
+            try {
+                const res = await fetch('/testimonials.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testimonialData)
+                });
+                const result = await res.json();
+                
+                if(result.success) {
+                    form.reset();
+                    fetchTestimonials();
+                    alert('Testimoni berhasil disimpan ke database!');
+                } else {
+                    alert(result.error || 'Gagal menyimpan data');
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan jaringan');
+            }
         });
 
-        tableBody.addEventListener('click', (e) => {
+        tableBody.addEventListener('click', async (e) => {
             if (e.target.classList.contains('delete-btn')) {
-                const id = parseInt(e.target.dataset.id);
-                if (confirm('Yakin ingin menghapus testimoni ini?')) {
-                    let testimonials = getTestimonials();
-                    testimonials = testimonials.filter(t => t.id !== id);
-                    saveTestimonials(testimonials);
-                    renderTable();
+                const id = e.target.dataset.id;
+                if (confirm('Yakin ingin menghapus testimoni ini dari database?')) {
+                    try {
+                        const res = await fetch(`/testimonials.php?id=${id}`, { method: 'DELETE' });
+                        const result = await res.json();
+                        if(result.success) {
+                            fetchTestimonials();
+                        } else {
+                            alert(result.error || 'Gagal menghapus data');
+                        }
+                    } catch(err) {
+                        alert('Terjadi kesalahan jaringan');
+                    }
                 }
             }
         });
 
-        // Initial render
-        renderTable();
+        // Initial fetch
+        fetchTestimonials();
     });
 </script>
 

@@ -35,9 +35,11 @@ const DashboardLayout = () => {
           <Link to="/admin/pages" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
             <i className="fa-solid fa-file-lines w-6"></i> Semua Halaman
           </Link>
-          {/* Menu Testimoni Baru */}
           <Link to="/admin/testimonials" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
             <i className="fa-solid fa-quote-right w-6"></i> Testimoni
+          </Link>
+          <Link to="/admin/agents" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
+            <i className="fa-solid fa-users w-6"></i> Data Agen
           </Link>
           <Link to="/admin/menus" onClick={() => setSidebarOpen(false)} className="block py-3 px-6 hover:bg-gray-800 border-l-4 border-transparent hover:border-blue-500">
             <i className="fa-solid fa-bars w-6"></i> Pengaturan Menu
