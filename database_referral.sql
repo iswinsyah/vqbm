@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS santri (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    alamat TEXT,
+    agen_id INT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS referral_visits (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    agen_id INT NOT NULL,
+    ip_address VARCHAR(50),
+    visit_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
