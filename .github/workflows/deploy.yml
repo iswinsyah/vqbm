@@ -25,7 +25,17 @@ jobs:
       - name: 🏗️ Build Project
         run: npm run build
 
-      - name: 📂 Sync files (FTP)
+      - name: 🗂️ Susun File Admin & PHP ke folder dist
+        run: |
+          # 1. Pindahkan semua API PHP ke folder root dist
+          cp *.php dist/ || true
+          
+          # 2. Buat folder admin dan kumpulkan semua HTML dashboard ke dalamnya
+          mkdir -p dist/admin
+          cp posts.html pages.html agents.html menus.html settings.html index.html dist/admin/ || true
+          cp testimonials.html dist/admin/ || true
+
+      - name: � Sync files (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
