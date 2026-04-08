@@ -30,14 +30,8 @@ jobs:
           # 1. Pastikan folder admin ada
           mkdir -p dist/admin
           
-          # 2. Copy file HTML admin secara eksplisit
-          cp index.html dist/admin/index.html
-          cp posts.html dist/admin/posts.html
-          cp pages.html dist/admin/pages.html
-          cp agents.html dist/admin/agents.html
-          cp menus.html dist/admin/menus.html
-          cp settings.html dist/admin/settings.html
-          cp src/testimonials.html dist/admin/testimonials.html
+          # 2. Copy file HTML admin dari folder admin_static
+          cp admin_static/*.html dist/admin/
           
           # 3. Pindahkan semua API PHP ke folder root dist
           cp *.php dist/ || true
