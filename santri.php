@@ -51,8 +51,15 @@ switch ($method) {
         break;
 
     case 'DELETE':
-        // Untuk fitur hapus data santri di admin
-        // (Bisa dikembangkan nanti)
+        if (isset($_GET['id'])) {
+            $id = (int)$_GET['id'];
+            $sql = "DELETE FROM santri WHERE id=$id";
+            if ($conn->query($sql) === TRUE) {
+                echo json_encode(["success" => true, "message" => "Data pendaftaran berhasil dihapus!"]);
+            } else {
+                echo json_encode(["error" => "Error: " . $conn->error]);
+            }
+        }
         break;
 
     default:
