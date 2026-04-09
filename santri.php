@@ -25,8 +25,14 @@ switch ($method) {
         $data = json_decode(file_get_contents("php://input"));
         
         $nama = $conn->real_escape_string($data->nama ?? '');
+        $nisn = $conn->real_escape_string($data->nisn ?? '');
+        $ttl = $conn->real_escape_string($data->ttl ?? '');
+        $jenis_kelamin = $conn->real_escape_string($data->jenis_kelamin ?? '');
+        $asal_sekolah = $conn->real_escape_string($data->asal_sekolah ?? '');
+        $nama_ortu = $conn->real_escape_string($data->nama_ortu ?? '');
         $phone = $conn->real_escape_string($data->phone ?? '');
         $alamat = $conn->real_escape_string($data->alamat ?? '');
+        $program = $conn->real_escape_string($data->program ?? '');
         $ref_phone = isset($data->ref) ? $conn->real_escape_string($data->ref) : '';
         
         $agen_id = "NULL"; // Default tidak menggunakan jalur agen
@@ -41,7 +47,7 @@ switch ($method) {
             }
         }
 
-        $sql = "INSERT INTO santri (nama, phone, alamat, agen_id) VALUES ('$nama', '$phone', '$alamat', $agen_id)";
+        $sql = "INSERT INTO santri (nama, nisn, ttl, jenis_kelamin, asal_sekolah, nama_ortu, phone, alamat, program, agen_id) VALUES ('$nama', '$nisn', '$ttl', '$jenis_kelamin', '$asal_sekolah', '$nama_ortu', '$phone', '$alamat', '$program', $agen_id)";
         
         if ($conn->query($sql) === TRUE) {
             echo json_encode(["success" => true, "message" => "Pendaftaran berhasil, alhamdulillah!"]);

@@ -1,8 +1,14 @@
 CREATE TABLE IF NOT EXISTS santri (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama VARCHAR(255) NOT NULL,
+    nisn VARCHAR(50),
+    ttl VARCHAR(100),
+    jenis_kelamin VARCHAR(20),
+    asal_sekolah VARCHAR(150),
+    nama_ortu VARCHAR(255),
     phone VARCHAR(50) NOT NULL,
     alamat TEXT,
+    program VARCHAR(100),
     agen_id INT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

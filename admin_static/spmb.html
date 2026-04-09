@@ -45,13 +45,15 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Daftar</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Pendaftar</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">L/P</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pilihan Program</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Asal Sekolah</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. WhatsApp</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alamat</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Agen Referal</th>
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="santri-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+                        <tbody id="santri-table-body" class="bg-white divide-y divide-gray-200 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -65,34 +67,40 @@
 
     const fetchSantri = async () => {
         try {
-            tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data...</td></tr>';
             const res = await fetch('/santri.php');
             santriData = await res.json();
             render();
         } catch (err) {
             console.error('Gagal mengambil data:', err);
-            tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
         }
     };
 
     const render = () => {
-        tableBody.innerHTML = santriData.length ? '' : '<tr><td colspan="7" class="text-center py-4 text-gray-500">Belum ada data pendaftar SPMB.</td></tr>';
+        tableBody.innerHTML = santriData.length ? '' : '<tr><td colspan="9" class="text-center py-4 text-gray-500">Belum ada data pendaftar SPMB.</td></tr>';
         
         santriData.forEach((s, index) => {
             const date = new Date(s.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             const agentBadge = s.agen_name 
                 ? `<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full"><i class="fa-solid fa-user-tie mr-1"></i> ${s.agen_name}</span>`
                 : `<span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">Mandiri</span>`;
+            
+            const jkIcon = s.jenis_kelamin === 'Laki-laki' 
+                ? `<i class="fa-solid fa-mars text-blue-500" title="Laki-laki"></i>` 
+                : `<i class="fa-solid fa-venus text-pink-500" title="Perempuan"></i>`;
 
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="px-6 py-4 whitespace-nowrap text-gray-500">${index + 1}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${date}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-600">${date}</td>
                 <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">${s.nama}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><a href="https://wa.me/${s.phone.replace(/[^0-9]/g, '')}" target="_blank" class="text-emerald-600 hover:underline"><i class="fa-brands fa-whatsapp"></i> ${s.phone}</a></td>
-                <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">${s.alamat}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-lg">${jkIcon}</td>
+                <td class="px-6 py-4 whitespace-nowrap font-bold text-emerald-700">${s.program || '-'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-500">${s.asal_sekolah || '-'}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-500"><a href="https://wa.me/${s.phone.replace(/[^0-9]/g, '')}" target="_blank" class="text-emerald-600 hover:underline"><i class="fa-brands fa-whatsapp"></i> ${s.phone}</a></td>
                 <td class="px-6 py-4 whitespace-nowrap text-center">${agentBadge}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td class="px-6 py-4 whitespace-nowrap text-right font-medium">
                     <button onclick="deleteSantri(${s.id})" class="text-red-600 hover:text-red-900"><i class="fa-solid fa-trash-can"></i> Hapus</button>
                 </td>
             `;
