@@ -50,6 +50,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Asal Sekolah</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. WhatsApp</th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Agen Referal</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status Pipeline</th>
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi</th>
                             </tr>
                         </thead>
@@ -67,18 +68,18 @@
 
     const fetchSantri = async () => {
         try {
-            tableBody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data...</td></tr>';
             const res = await fetch('/santri.php');
             santriData = await res.json();
             render();
         } catch (err) {
             console.error('Gagal mengambil data:', err);
-            tableBody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
         }
     };
 
     const render = () => {
-        tableBody.innerHTML = santriData.length ? '' : '<tr><td colspan="9" class="text-center py-4 text-gray-500">Belum ada data pendaftar SPMB.</td></tr>';
+        tableBody.innerHTML = santriData.length ? '' : '<tr><td colspan="10" class="text-center py-4 text-gray-500">Belum ada data pendaftar SPMB.</td></tr>';
         
         santriData.forEach((s, index) => {
             const date = new Date(s.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -90,6 +91,32 @@
                 ? `<i class="fa-solid fa-mars text-blue-500" title="Laki-laki"></i>` 
                 : `<i class="fa-solid fa-venus text-pink-500" title="Perempuan"></i>`;
 
+            // CRM Pipeline Status logic
+            const currentStatus = s.status || 'Daftar';
+            const getStatusColor = (st) => {
+                switch(st) {
+                    case 'Kunjungan Web': return 'bg-gray-100 text-gray-700 border-gray-300';
+                    case 'Ikut Seminar': return 'bg-purple-100 text-purple-700 border-purple-300';
+                    case 'Survey': return 'bg-indigo-100 text-indigo-700 border-indigo-300';
+                    case 'Daftar': return 'bg-blue-100 text-blue-700 border-blue-300';
+                    case 'Test': return 'bg-yellow-100 text-yellow-700 border-yellow-300';
+                    case 'Interview': return 'bg-orange-100 text-orange-700 border-orange-300';
+                    case 'Daftar Ulang': return 'bg-emerald-100 text-emerald-700 border-emerald-300';
+                    default: return 'bg-gray-100 text-gray-700 border-gray-300';
+                }
+            };
+            const statusDropdown = `
+                <select onchange="updateStatus(${s.id}, this.value)" class="text-xs font-bold rounded-full px-2 py-1 border outline-none cursor-pointer ${getStatusColor(currentStatus)}">
+                    <option value="Kunjungan Web" ${currentStatus === 'Kunjungan Web' ? 'selected' : ''}>Kunjungan Web</option>
+                    <option value="Ikut Seminar" ${currentStatus === 'Ikut Seminar' ? 'selected' : ''}>Ikut Seminar</option>
+                    <option value="Survey" ${currentStatus === 'Survey' ? 'selected' : ''}>Survey</option>
+                    <option value="Daftar" ${currentStatus === 'Daftar' ? 'selected' : ''}>Daftar</option>
+                    <option value="Test" ${currentStatus === 'Test' ? 'selected' : ''}>Test</option>
+                    <option value="Interview" ${currentStatus === 'Interview' ? 'selected' : ''}>Interview</option>
+                    <option value="Daftar Ulang" ${currentStatus === 'Daftar Ulang' ? 'selected' : ''}>Daftar Ulang</option>
+                </select>
+            `;
+
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="px-6 py-4 whitespace-nowrap text-gray-500">${index + 1}</td>
@@ -100,12 +127,31 @@
                 <td class="px-6 py-4 whitespace-nowrap text-gray-500">${s.asal_sekolah || '-'}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-500"><a href="https://wa.me/${s.phone.replace(/[^0-9]/g, '')}" target="_blank" class="text-emerald-600 hover:underline"><i class="fa-brands fa-whatsapp"></i> ${s.phone}</a></td>
                 <td class="px-6 py-4 whitespace-nowrap text-center">${agentBadge}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-center">${statusDropdown}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-right font-medium">
                     <button onclick="deleteSantri(${s.id})" class="text-red-600 hover:text-red-900"><i class="fa-solid fa-trash-can"></i> Hapus</button>
                 </td>
             `;
             tableBody.appendChild(row);
         });
+    };
+
+    window.updateStatus = async (id, newStatus) => {
+        try {
+            const res = await fetch('/santri.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, status: newStatus })
+            });
+            const result = await res.json();
+            if(result.success) {
+                fetchSantri(); // Refresh warna UI otomatis
+            } else {
+                alert(result.error || 'Gagal memperbarui status');
+            }
+        } catch (err) {
+            alert('Terjadi kesalahan jaringan');
+        }
     };
 
     window.deleteSantri = async (id) => {

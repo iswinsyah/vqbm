@@ -3,7 +3,7 @@ require_once 'config.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, GET, DELETE");
+header("Access-Control-Allow-Methods: POST, GET, DELETE, PUT");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -47,12 +47,28 @@ switch ($method) {
             }
         }
 
-        $sql = "INSERT INTO santri (nama, nisn, ttl, jenis_kelamin, asal_sekolah, nama_ortu, phone, alamat, program, agen_id) VALUES ('$nama', '$nisn', '$ttl', '$jenis_kelamin', '$asal_sekolah', '$nama_ortu', '$phone', '$alamat', '$program', $agen_id)";
+        $sql = "INSERT INTO santri (nama, nisn, ttl, jenis_kelamin, asal_sekolah, nama_ortu, phone, alamat, program, agen_id, status) VALUES ('$nama', '$nisn', '$ttl', '$jenis_kelamin', '$asal_sekolah', '$nama_ortu', '$phone', '$alamat', '$program', $agen_id, 'Daftar')";
         
         if ($conn->query($sql) === TRUE) {
             echo json_encode(["success" => true, "message" => "Pendaftaran berhasil, alhamdulillah!"]);
         } else {
             echo json_encode(["error" => "Error: " . $conn->error]);
+        }
+        break;
+
+    case 'PUT':
+        $data = json_decode(file_get_contents("php://input"));
+        if (isset($data->id) && isset($data->status)) {
+            $id = (int)$data->id;
+            $status = $conn->real_escape_string($data->status);
+            $sql = "UPDATE santri SET status='$status' WHERE id=$id";
+            if ($conn->query($sql) === TRUE) {
+                echo json_encode(["success" => true, "message" => "Status pipeline berhasil diperbarui!"]);
+            } else {
+                echo json_encode(["error" => "Error: " . $conn->error]);
+            }
+        } else {
+            echo json_encode(["error" => "Data tidak lengkap"]);
         }
         break;
 

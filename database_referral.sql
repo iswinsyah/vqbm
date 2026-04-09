@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS santri (
     alamat TEXT,
     program VARCHAR(100),
     agen_id INT DEFAULT NULL,
+    status VARCHAR(50) DEFAULT 'Daftar',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
