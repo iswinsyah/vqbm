@@ -86,6 +86,7 @@ const Navbar = () => {
           <div className="hidden lg:flex space-x-6 items-center">
             {parentMenus.map(menu => renderMenuItem(menu))}
 
+            {/* Tombol SPMB Desktop */}
             <Link to="/daftar" className="bg-[var(--color-btn-urgent)] hover:opacity-90 text-white px-5 py-2 rounded-lg font-medium transition shadow-md flex items-center gap-2 ml-4">
               <i className="fa-solid fa-user-plus text-sm"></i> SPMB Online
             </Link>
@@ -129,6 +130,7 @@ const Navbar = () => {
               </Link>
             )
           })}
+          {/* Tombol SPMB Mobile */}
           <Link to="/daftar" onClick={() => setIsOpen(false)} className="block px-3 py-2 bg-primary text-white text-center rounded mt-4">
             SPMB Online
           </Link>
