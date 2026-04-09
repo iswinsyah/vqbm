@@ -35,6 +35,9 @@ jobs:
           
           # 3. Pindahkan semua API PHP ke folder root dist
           cp *.php dist/ || true
+          
+          # 4. Pastikan file .htaccess ikut terbawa agar routing tidak error
+          cp .htaccess dist/ || true
 
       - name: 🚀 Sync files (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
