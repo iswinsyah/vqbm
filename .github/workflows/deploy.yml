@@ -49,7 +49,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           password: ${{ secrets.FTP_PASSWORD }}
           local_path: './dist/*'
-          # Ganti ke path yang benar di hPanel SFTP/SSH, contoh: /public_html/site_baru/
-          remote_path: 'public_html/site_baru/'
+          # Upload langsung ke folder utama website agar bisa diakses dari domain utama
+          remote_path: 'public_html/web/dist/'
           sftp_only: true
           port: 65002
