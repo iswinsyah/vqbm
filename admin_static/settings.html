@@ -86,35 +86,48 @@
             secondaryColor: "#D97706"
         };
 
-        // Load settings
-        const currentSettings = JSON.parse(localStorage.getItem('siteSettings')) || defaultSettings;
-
-        // Populate form
-        document.getElementById('title').value = currentSettings.title || '';
-        document.getElementById('description').value = currentSettings.description || '';
-        document.getElementById('logo').value = currentSettings.logo || '';
-        
-        const pColor = currentSettings.primaryColor || defaultSettings.primaryColor;
-        const sColor = currentSettings.secondaryColor || defaultSettings.secondaryColor;
-        
-        document.getElementById('primaryColor').value = pColor;
-        document.getElementById('primaryColorText').value = pColor;
-        document.getElementById('secondaryColor').value = sColor;
-        document.getElementById('secondaryColorText').value = sColor;
+        // Load settings dari API Database MySQL
+        fetch('/settings.php')
+            .then(res => res.json())
+            .then(data => {
+                const currentSettings = Object.keys(data).length > 0 ? data : defaultSettings;
+                
+                document.getElementById('title').value = currentSettings.title || '';
+                document.getElementById('description').value = currentSettings.description || '';
+                document.getElementById('logo').value = currentSettings.logo || '';
+                
+                const pColor = currentSettings.primaryColor || defaultSettings.primaryColor;
+                const sColor = currentSettings.secondaryColor || defaultSettings.secondaryColor;
+                
+                document.getElementById('primaryColor').value = pColor;
+                document.getElementById('primaryColorText').value = pColor;
+                document.getElementById('secondaryColor').value = sColor;
+                document.getElementById('secondaryColorText').value = sColor;
+            })
+            .catch(err => console.error("Gagal memuat pengaturan:", err));
 
         // Color picker listeners
         document.getElementById('primaryColor').addEventListener('input', (e) => document.getElementById('primaryColorText').value = e.target.value);
         document.getElementById('secondaryColor').addEventListener('input', (e) => document.getElementById('secondaryColorText').value = e.target.value);
 
-        // Save settings
+        // Save settings ke API Database MySQL
         document.getElementById('settings-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const newSettings = { ...currentSettings };
+            const newSettings = {};
             formData.forEach((value, key) => newSettings[key] = value);
             
-            localStorage.setItem('siteSettings', JSON.stringify(newSettings));
-            alert('Pengaturan berhasil disimpan!');
+            fetch('/settings.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newSettings)
+            })
+            .then(res => res.json())
+            .then(result => {
+                if(result.success) alert('Pengaturan berhasil disimpan ke Database!');
+                else alert('Gagal menyimpan: ' + result.error);
+            })
+            .catch(err => alert('Terjadi kesalahan jaringan!'));
         });
     });
 </script>
