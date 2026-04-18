@@ -1,6 +1,10 @@
 RewriteEngine On
 RewriteBase /
 
+DirectoryIndex index.html index.php
+# 1. Pengecualian Mutlak: Biarkan folder admin dan file PHP diakses langsung
+RewriteRule ^(admin|dashboardadmin|.*\.php) - [L]
+
 # Jangan redirect jika file atau folder fisik ditemukan (untuk API PHP, gambar, css)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
