@@ -42,14 +42,13 @@ jobs:
           # 5. Pastikan file .htaccess ikut terbawa agar routing tidak error
           cp .htaccess dist/ || true
 
-      - name: 🚀 Sync files (SFTP)
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: 🚀 Sync files (SCP)
+        uses: appleboy/scp-action@v0.1.7
         with:
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
-          server: ${{ secrets.FTP_SERVER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_path: './dist'
-          # Mengirim folder dist utuh tepat ke dalam folder web
-          remote_path: 'public_html/web'
-          sftp_only: true
           port: 65002
+          source: "dist"
+          target: "public_html"
+          strip_components: 1
