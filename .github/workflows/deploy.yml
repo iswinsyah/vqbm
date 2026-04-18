@@ -33,10 +33,13 @@ jobs:
           # 2. Salin semua file admin dari admin_static
           cp -r admin_static/. dist/admin/
           
-          # 3. Pindahkan semua API PHP ke folder root dist
+          # 3. Salin semua API PHP (termasuk config.php lokal untuk sementara)
           cp *.php dist/ || true
           
-          # 4. Pastikan file .htaccess ikut terbawa agar routing tidak error
+          # 4. TIMPA config.php dengan versi produksi dari folder public
+          cp public/config.php dist/config.php
+          
+          # 5. Pastikan file .htaccess ikut terbawa agar routing tidak error
           cp .htaccess dist/ || true
 
       - name: 🚀 Sync files (SFTP)
