@@ -96,12 +96,19 @@
         // --- Data Functions ---
         const fetchTestimonials = async () => {
             try {
-                const res = await fetch('/testimonials.php');
-                testimonials = await res.json();
+                const res = await fetch('../testimonials.php');
+                const data = await res.json();
+                
+                if (data.error) {
+                    tableBody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-red-500 font-bold">${data.error}</td></tr>`;
+                    return;
+                }
+                
+                testimonials = data;
                 renderTable();
             } catch (err) {
                 console.error('Gagal mengambil data:', err);
-                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-red-500">Gagal terhubung ke API (../testimonials.php). Pastikan server PHP aktif.</td></tr>';
             }
         };
 
@@ -141,7 +148,7 @@
             };
             
             try {
-                const res = await fetch('/testimonials.php', {
+                const res = await fetch('../testimonials.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(testimonialData)
@@ -156,7 +163,7 @@
                     alert(result.error || 'Gagal menyimpan data');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan jaringan');
+                alert('Terjadi kesalahan jaringan atau database. Pastikan koneksi database benar.');
             }
         });
 
@@ -165,7 +172,7 @@
                 const id = e.target.dataset.id;
                 if (confirm('Yakin ingin menghapus testimoni ini dari database?')) {
                     try {
-                        const res = await fetch(`/testimonials.php?id=${id}`, { method: 'DELETE' });
+                        const res = await fetch(`../testimonials.php?id=${id}`, { method: 'DELETE' });
                         const result = await res.json();
                         if(result.success) {
                             fetchTestimonials();
@@ -173,7 +180,7 @@
                             alert(result.error || 'Gagal menghapus data');
                         }
                     } catch(err) {
-                        alert('Terjadi kesalahan jaringan');
+                        alert('Terjadi kesalahan jaringan atau server PHP tidak merespons.');
                     }
                 }
             }

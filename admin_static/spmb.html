@@ -70,12 +70,23 @@
     const fetchSantri = async () => {
         try {
             tableBody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data...</td></tr>';
-            const res = await fetch('/santri.php');
-            santriData = await res.json();
+            const res = await fetch('../santri.php');
+            const data = await res.json();
+            
+            if (data.error) {
+                let errorHtml = `<div class="text-red-500 font-bold">${data.error}</div>`;
+                if (data.details) errorHtml += `<div class="text-xs text-gray-500 mt-1">Detail: ${data.details}</div>`;
+                if (data.suggestion) errorHtml += `<div class="text-sm text-blue-600 mt-2 p-2 bg-blue-50 rounded">${data.suggestion}</div>`;
+                
+                tableBody.innerHTML = `<tr><td colspan="10" class="text-center py-4">${errorHtml}</td></tr>`;
+                return;
+            }
+            
+            santriData = data;
             render();
         } catch (err) {
             console.error('Gagal mengambil data:', err);
-            tableBody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-red-500">Gagal terhubung ke API (../santri.php). Pastikan server PHP aktif.</td></tr>';
         }
     };
 
@@ -139,7 +150,7 @@
 
     window.updateStatus = async (id, newStatus) => {
         try {
-            const res = await fetch('/santri.php', {
+            const res = await fetch('../santri.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id, status: newStatus })
@@ -151,19 +162,19 @@
                 alert(result.error || 'Gagal memperbarui status');
             }
         } catch (err) {
-            alert('Terjadi kesalahan jaringan');
+            alert('Terjadi kesalahan jaringan atau server PHP tidak merespons.');
         }
     };
 
     window.deleteSantri = async (id) => {
         if(confirm('Yakin ingin menghapus data pendaftar ini?')) {
             try {
-                const res = await fetch('/santri.php?id=' + id, { method: 'DELETE' });
+                const res = await fetch('../santri.php?id=' + id, { method: 'DELETE' });
                 const result = await res.json();
                 if(result.success) fetchSantri();
                 else alert(result.error || 'Gagal menghapus data');
             } catch(err) {
-                alert('Terjadi kesalahan jaringan');
+                alert('Terjadi kesalahan jaringan atau server PHP tidak merespons.');
             }
         }
     };

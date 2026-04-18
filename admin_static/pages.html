@@ -84,12 +84,19 @@
         // Fetch dari Database MySQL
         const fetchPages = async () => {
             try {
-                const res = await fetch('/pages.php');
-                pages = await res.json();
+                const res = await fetch('../pages.php');
+                const data = await res.json();
+                
+                if (data.error) {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-500 font-bold">${data.error}</td></tr>`;
+                    return;
+                }
+                
+                pages = data;
                 render();
             } catch (err) {
                 console.error('Gagal mengambil data:', err);
-                tableBody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-red-500">Gagal terhubung ke database.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-red-500">Gagal terhubung ke API (../pages.php). Pastikan server PHP aktif.</td></tr>';
             }
         };
 

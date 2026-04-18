@@ -88,8 +88,15 @@
 
     const fetchSantri = async () => {
         try {
-            const res = await fetch('/santri.php');
-            santriData = await res.json();
+            const res = await fetch('../santri.php');
+            const data = await res.json();
+            
+            if (data.error) {
+                alert('Error dari database: ' + data.error);
+                return;
+            }
+            
+            santriData = data;
             renderCards();
         } catch (err) {
             console.error('Gagal mengambil data:', err);
@@ -100,8 +107,10 @@
         // Reset columns
         statuses.forEach(status => {
             const safeId = status.name.replace(/\s+/g, '-');
-            document.getElementById(`col-${safeId}`).innerHTML = '';
-            document.getElementById(`count-${safeId}`).innerText = '0';
+            const el = document.getElementById(`col-${safeId}`);
+            const countEl = document.getElementById(`count-${safeId}`);
+            if (el) el.innerHTML = '';
+            if (countEl) countEl.innerText = '0';
         });
 
         // Populate cards
@@ -138,7 +147,9 @@
                 
                 // Update count
                 const countEl = document.getElementById(`count-${safeId}`);
-                countEl.innerText = parseInt(countEl.innerText) + 1;
+                if (countEl) {
+                    countEl.innerText = parseInt(countEl.innerText) + 1;
+                }
             }
         });
     };
@@ -187,14 +198,16 @@
             if (santri) {
                 const oldSafeId = (santri.status || 'Daftar').replace(/\s+/g, '-');
                 santri.status = newStatus;
-                document.getElementById(`count-${oldSafeId}`).innerText = Math.max(0, parseInt(document.getElementById(`count-${oldSafeId}`).innerText) - 1);
-                document.getElementById(`count-${safeId}`).innerText = parseInt(document.getElementById(`count-${safeId}`).innerText) + 1;
+                const oldCounter = document.getElementById(`count-${oldSafeId}`);
+                const newCounter = document.getElementById(`count-${safeId}`);
+                if (oldCounter) oldCounter.innerText = Math.max(0, parseInt(oldCounter.innerText) - 1);
+                if (newCounter) newCounter.innerText = parseInt(newCounter.innerText) + 1;
             }
         }
 
         // API Call in Background
         try {
-            const res = await fetch('/santri.php', {
+            const res = await fetch('../santri.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: draggedId, status: newStatus })
@@ -205,7 +218,7 @@
                 fetchSantri(); // Revert on failure
             }
         } catch (err) {
-            alert('Terjadi kesalahan jaringan');
+            alert('Terjadi kesalahan jaringan atau server PHP tidak merespons.');
             fetchSantri(); // Revert on failure
         }
     };
