@@ -89,7 +89,8 @@
 
         const fetchAgents = async () => {
             try {
-                const res = await fetch('../agents.php');
+                // Menggunakan absolute path agar tidak tersesat
+                const res = await fetch('/agents.php');
                 const data = await res.json();
                 
                 if (data.error) {
@@ -105,7 +106,7 @@
                 render();
             } catch (err) {
                 console.error('Gagal mengambil data:', err);
-                tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-red-500">Gagal terhubung ke API (../agents.php). Pastikan server PHP aktif.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-red-500">Gagal terhubung ke API (/agents.php). Terjadi kesalahan jaringan.</td></tr>';
             }
         };
 
@@ -154,7 +155,7 @@
         window.deleteAgent = async (id) => {
             if(confirm('Hapus agen ini?')) {
                 try {
-                    const res = await fetch('../agents.php?id=' + id, { method: 'DELETE' });
+                    const res = await fetch('/agents.php?id=' + id, { method: 'DELETE' });
                     const result = await res.json();
                     if(result.success) {
                         fetchAgents();
@@ -178,7 +179,7 @@
             };
 
             try {
-                const res = await fetch('../agents.php', {
+                const res = await fetch('/agents.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(agentData)
