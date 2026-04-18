@@ -39,17 +39,14 @@ jobs:
           # 4. Pastikan file .htaccess ikut terbawa agar routing tidak error
           cp .htaccess dist/ || true
 
-      - name: 🚀 Sync files (FTP)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 🚀 Sync files (SFTP)
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
+          server: ${{ secrets.FTP_SERVER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./
-          dangerous-clean-slate: false
-          protocol: ftp
-          port: 21
-          # Use 'loose' if strict fails due to certificate issues on shared hosting
-          security: loose
-          dry-run: false
+          local_path: './dist/*'
+          # Ganti ke path yang benar di hPanel SFTP/SSH, contoh: /public_html/site_baru/
+          remote_path: 'public_html/site_baru/'
+          sftp_only: true
+          port: 22
