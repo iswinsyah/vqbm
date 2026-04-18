@@ -81,4 +81,11 @@ $conn->query("CREATE TABLE IF NOT EXISTS referral_visits (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )");
 
+$conn->query("CREATE TABLE IF NOT EXISTS menus (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    parent_id INT NULL
+)");
+
 ?>
