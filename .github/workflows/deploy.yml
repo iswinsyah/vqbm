@@ -42,7 +42,7 @@ jobs:
           cp public/config.php dist/config.php
           
           # 5. Pastikan file .htaccess ikut terbawa agar routing tidak error
-          cp .htaccess dist/ || true
+          cp public/.htaccess dist/.htaccess || true
 
       - name: 🚀 Sync files (SCP)
         uses: appleboy/scp-action@v0.1.7
