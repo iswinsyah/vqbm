@@ -50,5 +50,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           source: "dist"
-          target: "public_html"
+          target: "public_html/web/dist"
           strip_components: 1
