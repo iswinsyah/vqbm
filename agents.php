@@ -28,13 +28,22 @@ switch ($method) {
         break;
 
     case 'POST':
-        $data = json_decode(file_get_contents("php://input"));
+        // Mendukung request JSON dari fetch atau FormData bawaan HTML
+        $input = file_get_contents("php://input");
+        $data = json_decode($input);
         
-        $id = isset($data->id) ? (int)$data->id : null;
-        $name = $conn->real_escape_string($data->name ?? '');
-        $phone = $conn->real_escape_string($data->phone ?? '');
-        $commission = $conn->real_escape_string($data->commission ?? '0');
-        
+        if ($data) {
+            $id = isset($data->id) ? (int)$data->id : null;
+            $name = $conn->real_escape_string($data->name ?? '');
+            $phone = $conn->real_escape_string($data->phone ?? '');
+            $commission = $conn->real_escape_string($data->commission ?? '0');
+        } else {
+            $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
+            $name = $conn->real_escape_string($_POST['name'] ?? '');
+            $phone = $conn->real_escape_string($_POST['phone'] ?? '');
+            $commission = $conn->real_escape_string($_POST['commission'] ?? '0');
+        }
+
         // Jika ID ada, lakukan UPDATE. Jika tidak, lakukan INSERT.
         if ($id) {
             $sql = "UPDATE agents SET name='$name', phone='$phone', commission='$commission' WHERE id=$id";
