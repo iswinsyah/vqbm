@@ -1,27 +1,22 @@
 <?php
 require_once 'config.php';
 
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST, GET, DELETE");
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        $sql = "SELECT * FROM agents ORDER BY id DESC";
+        // Mengambil daftar agen sekaligus menghitung jumlah closing (Santri dengan status 'Daftar Ulang')
+        $sql = "SELECT agents.*, 
+                       (SELECT COUNT(id) FROM santri WHERE agen_id = agents.id AND status = 'Daftar Ulang') as closing_count 
+                FROM agents ORDER BY id DESC";
         $result = $conn->query($sql);
         $agents = [];
-        
         if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $agen_id = $row['id'];
-                
-                $count_sql = "SELECT COUNT(*) as total_closing FROM santri WHERE agen_id = $agen_id";
-                $count_result = $conn->query($count_sql);
-                
-                $closing_count = 0;
-                if ($count_result && $count_row = $count_result->fetch_assoc()) {
-                    $closing_count = (int)$count_row['total_closing'];
-                }
-                
-                $row['closing_count'] = $closing_count;
                 $agents[] = $row;
             }
         }
@@ -31,19 +26,18 @@ switch ($method) {
     case 'POST':
         $data = json_decode(file_get_contents("php://input"));
         
-        $name = $conn->real_escape_string($data->name);
-        $phone = $conn->real_escape_string($data->phone);
+        $id = isset($data->id) ? (int)$data->id : null;
+        $name = $conn->real_escape_string($data->name ?? '');
+        $phone = $conn->real_escape_string($data->phone ?? '');
+        $commission = $conn->real_escape_string($data->commission ?? '0');
         
-        $commission_input = (isset($data->commission) && $data->commission !== '') ? $data->commission : 0;
-        $commission = $conn->real_escape_string($commission_input);
-
-        if (isset($data->id) && !empty($data->id)) {
-            $id = (int)$data->id;
+        // Jika ID ada, lakukan UPDATE. Jika tidak, lakukan INSERT.
+        if ($id) {
             $sql = "UPDATE agents SET name='$name', phone='$phone', commission='$commission' WHERE id=$id";
         } else {
             $sql = "INSERT INTO agents (name, phone, commission) VALUES ('$name', '$phone', '$commission')";
         }
-
+        
         if ($conn->query($sql) === TRUE) {
             echo json_encode(["success" => true, "message" => "Data agen berhasil disimpan!"]);
         } else {
@@ -56,7 +50,7 @@ switch ($method) {
             $id = (int)$_GET['id'];
             $sql = "DELETE FROM agents WHERE id=$id";
             if ($conn->query($sql) === TRUE) {
-                echo json_encode(["success" => true, "message" => "Agen berhasil dihapus!"]);
+                echo json_encode(["success" => true, "message" => "Data agen berhasil dihapus!"]);
             } else {
                 echo json_encode(["error" => "Error: " . $conn->error]);
             }
