@@ -48,8 +48,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           server: ${{ secrets.FTP_SERVER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_path: './dist'
-          # Mengunggah folder 'dist' utuh ke dalam folder 'web'
-          remote_path: 'public_html/web'
+          local_path: './dist/*'
+          # Upload isi folder dist LANGSUNG ke kamar utama website
+          remote_path: 'public_html/'
           sftp_only: true
           port: 65002

@@ -1,13 +1,9 @@
 RewriteEngine On
+RewriteBase /
 
-# 1. Alihkan semua permintaan ke folder web/dist secara transparan
-# Jika pengunjung mengakses root (villaquranbaronmalang.com atau villaquranindonesia.com)
-RewriteCond %{REQUEST_URI} !^/web/dist/
+# Jangan redirect jika file atau folder fisik ditemukan (untuk API PHP, gambar, css)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /web/dist/$1 [L]
 
-# 2. Pastikan file index.html di dalam dist jadi landing page utama
-RewriteCond %{HTTP_HOST} ^(www\.)?villaquranbaronmalang\.com$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^(www\.)?villaquranindonesia\.com$ [NC]
-RewriteRule ^$ /web/dist/index.html [L]
+# Arahkan semua request lainnya ke index.html agar React Router berfungsi
+RewriteRule ^ index.html [L]

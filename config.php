@@ -87,4 +87,10 @@ $conn->query("CREATE TABLE IF NOT EXISTS menus (
     parent_id INT NULL
 )");
 
+$conn->query("CREATE TABLE IF NOT EXISTS settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(100) UNIQUE NOT NULL,
+    setting_value TEXT
+)");
+
 ?>
