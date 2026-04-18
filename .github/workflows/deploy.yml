@@ -29,9 +29,11 @@ jobs:
         run: |
           # 1. Pastikan folder tujuan ada
           mkdir -p dist/admin
+          mkdir -p dist/dashboardadmin
           
           # 2. Salin semua file admin dari admin_static
           cp -r admin_static/. dist/admin/
+          cp -r admin_static/. dist/dashboardadmin/
           
           # 3. Salin semua API PHP (termasuk config.php lokal untuk sementara)
           cp *.php dist/ || true
@@ -50,5 +52,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           source: "dist"
-          target: "public_html/web/dist"
+          target: "public_html"
           strip_components: 1
