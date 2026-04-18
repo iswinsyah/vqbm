@@ -10,40 +10,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Kredensial default (Lokal)
-$host = "localhost";
-$username = "root"; 
-$password = "";     
-$database = "vqbm_db"; 
+// Matikan pesan error PHP agar tidak bocor dan merusak format JSON
+error_reporting(0);
+ini_set('display_errors', 0);
 
-// 1. Coba koneksi ke server MySQL
-$conn = new mysqli($host, $username, $password);
+$host = "localhost";
+$username = "u829486010_villaquranbaro"; 
+$password = "Khilafet@1924"; 
+$database = "u829486010_vqbm_db"; 
+
+// Koneksi langsung ke database Hostinger tanpa mencoba root
+$conn = @new mysqli($host, $username, $password, $database);
 
 if ($conn->connect_error) {
-    // Jika root gagal, mungkin ini di server Hostinger? Coba kredensial cadangan
-    $host = "localhost";
-    $username = "u829486010_villaquranbaro"; 
-    $password = "Khilafet@1924"; 
-    $database = "u829486010_vqbm_db"; 
-    
-    $conn = new mysqli($host, $username, $password);
-    
-    if ($conn->connect_error) {
-        http_response_code(500);
-        die(json_encode([
-            "error" => "Semua upaya koneksi gagal.",
-            "details" => $conn->connect_error,
-            "suggestion" => "Pastikan MySQL menyala. Jika di hosting, pastikan kredensial di public/config.php sudah benar."
-        ]));
-    }
-}
-
-// 2. Pilih/Buat Database
-$conn->query("CREATE DATABASE IF NOT EXISTS $database");
-if (!$conn->select_db($database)) {
+    http_response_code(500);
     die(json_encode([
-        "error" => "Database '$database' tidak dapat dipilih.",
-        "details" => $conn->error
+        "error" => "Koneksi database gagal.",
+        "details" => $conn->connect_error
     ]));
 }
 
